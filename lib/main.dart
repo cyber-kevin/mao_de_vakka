@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
           child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 10),
+            padding: EdgeInsets.only(top: 190),
             child: Image.asset(
               'assets/images/vakka_logo.png',
             ),

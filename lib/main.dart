@@ -16,13 +16,13 @@ class MyApp extends StatelessWidget {
           child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 140),
+            padding: const EdgeInsets.only(top: 130),
             child: Image.asset(
               'assets/images/vakka_logo.png',
             ),
           ),
           const Padding(
-            padding: EdgeInsets.only(top: 35),
+            padding: EdgeInsets.only(top: 15),
             child: Text(
               'Mão de Vakka',
               style: TextStyle(
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
             height: 0,
           ),
           const Padding(
-            padding: EdgeInsets.only(top: 0),
+            padding: EdgeInsets.only(top: 0, bottom: 50),
             child: Text(
               'Organize suas finanças',
               style: TextStyle(
@@ -46,8 +46,16 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.w600),
             ),
           ),
+          Container(
+            width: 340,
+            height: 277,
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+            ),
+          ),
           const Padding(
-              padding: EdgeInsets.only(top: 309),
+              padding: EdgeInsets.only(top: 24),
               child: Text(
                 'AKKAV Group',
                 style: TextStyle(

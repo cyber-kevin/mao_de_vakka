@@ -74,9 +74,16 @@ flutter:
   fonts:
     - family: Poppins
       fonts:
-        - asset: assets/fonts/Poppins-SemiBold.ttf
-        - asset: assets/fonts/Poppins-Bold.ttf
-        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/Poppins/fonts/Poppins-SemiBold.ttf
+        - asset: assets/Poppins/fonts/Poppins-Bold.ttf
+        - asset: assets/Poppins/fonts/Poppins-Regular.ttf
+    
+    - family: Montserrat
+      fonts: 
+        - asset: /assets/fonts/Montserrat/Montserrat-SemiBold.ttf
+        - asset: /assets/fonts/Montserrat/Montserrat-Bold.ttf
+        - asset: /assets/fonts/Montserrat/Montserrat-Regular.ttf
+
   # fonts:
   #   - family: Schyler
   #     fonts:

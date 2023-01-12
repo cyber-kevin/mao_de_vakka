@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mao_de_vakka/app/views/SignUpPage.dart';
 
-void main(List<String> args) {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class InitialScreen extends StatelessWidget {
+  const InitialScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,37 +49,42 @@ class MyApp extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
+                        margin: const EdgeInsets.only(top: 47),
+                        child: DefaultButton(
+                          text: 'Fazer cadastro',
+                          backgroundColor:
+                              const Color.fromARGB(255, 34, 197, 94),
+                          onPressed: () => Navigator.of(context).push(
+                              MaterialPageRoute(builder: (_) => SignUpPage())),
+                        )),
+                    Container(
+                      margin: const EdgeInsets.only(top: 18),
                       child: DefaultButton(
-                        text: 'Fazer cadastro',
-                        backgroundColor: Color.fromARGB(255, 34, 197, 94),
-                      ),
-                      margin: EdgeInsets.only(top: 47),
+                          text: 'Login',
+                          backgroundColor:
+                              const Color.fromARGB(255, 241, 241, 241),
+                          fontColor: const Color.fromARGB(255, 34, 197, 94),
+                          borderColor: const Color.fromARGB(255, 34, 197, 94),
+                          onPressed: () => print('2')),
                     ),
                     Container(
-                      child: DefaultButton(
-                        text: 'Login',
-                        backgroundColor: Color.fromARGB(255, 241, 241, 241),
-                        fontColor: Color.fromARGB(255, 34, 197, 94),
-                        borderColor: Color.fromARGB(255, 34, 197, 94),
-                      ),
-                      margin: EdgeInsets.only(top: 18),
-                    ),
-                    Container(
+                      margin: EdgeInsets.only(top: 46),
                       child: UnderscoreButton(
                         text: 'Continuar sem login',
-                        color: Color.fromARGB(255, 34, 197, 94),
+                        color: const Color.fromARGB(255, 34, 197, 94),
                       ),
-                      margin: EdgeInsets.only(top: 46),
                     )
                   ],
                 ),
               ),
             ),
             Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
                   height: 170,
-                  child: Align(
+                  child: const Align(
                       alignment: Alignment.bottomCenter,
                       child: Text(
                         'AKKAV Group',
@@ -94,8 +96,6 @@ class MyApp extends StatelessWidget {
                       )),
                 ),
               ],
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
             ),
           ],
         ),
@@ -107,41 +107,43 @@ class MyApp extends StatelessWidget {
 class DefaultButton extends StatelessWidget {
   String text;
   Color backgroundColor;
-  var fontColor;
-  var borderColor;
+  dynamic fontColor;
+  dynamic borderColor;
+  final VoidCallback onPressed;
 
   DefaultButton(
       {super.key,
       required this.text,
       required this.backgroundColor,
+      required this.onPressed,
       this.fontColor = Colors.white,
       this.borderColor});
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           width: 250,
           height: 50,
           decoration: BoxDecoration(
-            color: this.backgroundColor,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            color: backgroundColor,
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
             border: Border.all(
               width: 1.0,
-              color: (borderColor != null ? borderColor : backgroundColor),
+              color: (borderColor ?? backgroundColor),
             ),
           ),
           child: TextButton(
               child: Center(
-                child: Text(this.text,
+                child: Text(text,
                     style:
                         TextStyle(color: fontColor, fontFamily: 'Montserrat')),
               ),
-              onPressed: () => {}),
+              onPressed: () => onPressed),
         )
       ],
-      mainAxisAlignment: MainAxisAlignment.center,
     );
   }
 }

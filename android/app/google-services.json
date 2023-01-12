@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1052054875237",
+    "project_id": "mao-de-vakka",
+    "storage_bucket": "mao-de-vakka.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052054875237:android:8028d61acd5cf4c149aa8c",
+        "android_client_info": {
+          "package_name": "com.example.mao_de_vakka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052054875237-nmpse8didphk2sjm1iidcmvg1vqm56g1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4PC0ijWzIPKoQ5LoAQwfDUoCaiQtFZQc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052054875237-nmpse8didphk2sjm1iidcmvg1vqm56g1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

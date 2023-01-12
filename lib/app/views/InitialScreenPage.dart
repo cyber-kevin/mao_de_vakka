@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD:lib/app/views/InitialScreenPage.dart
 import 'package:mao_de_vakka/app/views/SignUpPage.dart';
+=======
+import 'custom/buttons.dart';
+>>>>>>> b0a73bbac48a7533b20b95a6706c25a4c18ef0f0:lib/main.dart
 
 class InitialScreen extends StatelessWidget {
   const InitialScreen({Key? key}) : super(key: key);
@@ -9,6 +13,7 @@ class InitialScreen extends StatelessWidget {
     return MaterialApp(
         home: Scaffold(
       backgroundColor: const Color.fromARGB(255, 59, 219, 118),
+<<<<<<< HEAD:lib/app/views/InitialScreenPage.dart
       body: Center(
         child: Column(
           children: [
@@ -98,11 +103,104 @@ class InitialScreen extends StatelessWidget {
               ],
             ),
           ],
+=======
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 60),
+                child: Image.asset(
+                  'assets/images/vakka_logo.png',
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 15),
+                child: Text(
+                  'Mão de Vakka',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 0, bottom: 50),
+                child: Text(
+                  'Organize suas finanças',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+              Container(
+                width: 340,
+                height: 290,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 47),
+                        child: DefaultButton(
+                          text: 'Fazer cadastro',
+                          backgroundColor:
+                              const Color.fromARGB(255, 34, 197, 94),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 18),
+                        child: DefaultButton(
+                          text: 'Login',
+                          backgroundColor:
+                              const Color.fromARGB(255, 241, 241, 241),
+                          fontColor: const Color.fromARGB(255, 34, 197, 94),
+                          borderColor: const Color.fromARGB(255, 34, 197, 94),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 46),
+                        child: UnderscoreButton(
+                          text: 'Continuar sem login',
+                          color: const Color.fromARGB(255, 34, 197, 94),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Container(
+                    height: 50,
+                    child: const Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Text(
+                          'AKKAV Group',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontFamily: 'MontSerrat',
+                              fontWeight: FontWeight.w600),
+                        )),
+                  ),
+                ],
+              ),
+            ],
+          ),
+>>>>>>> b0a73bbac48a7533b20b95a6706c25a4c18ef0f0:lib/main.dart
         ),
       ),
     ));
   }
 }
+<<<<<<< HEAD:lib/app/views/InitialScreenPage.dart
 
 class DefaultButton extends StatelessWidget {
   String text;
@@ -178,3 +276,5 @@ class UnderscoreButton extends StatelessWidget {
     );
   }
 }
+=======
+>>>>>>> b0a73bbac48a7533b20b95a6706c25a4c18ef0f0:lib/main.dart

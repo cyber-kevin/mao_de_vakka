@@ -7,7 +7,10 @@ class User {
   String name;
   String email;
   String password;
-  DateTime birthday;
+  DateTime birthdate;
+  String gender;
+  String maritalStatus;
+  String educationLevel;
   double income = 0.0;
   Map<String, List<double>> _saveMoney = Map();
   Map<String, List<List<Entry>>> _entryList = Map();
@@ -17,7 +20,10 @@ class User {
       required this.name,
       required this.email,
       required this.password,
-      required this.birthday});
+      required this.birthdate,
+      required this.gender,
+      required this.maritalStatus,
+      required this.educationLevel});
 
   List<Entry> getEntryList(String year, Month month) {
     return _entryList[year]![month.value - 1];
@@ -43,7 +49,11 @@ class User {
         'id': id,
         'name': name,
         'email': email,
-        'birthday': birthday,
+        'password': password,
+        'birthdate': birthdate,
+        'gender': gender,
+        'maritalStatus': maritalStatus,
+        'educationLevel': educationLevel,
         'income': income,
         'saveMoneyList': _saveMoney,
         'entryList': _entryList,

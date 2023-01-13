@@ -5,7 +5,7 @@ class UserDAOFirestore implements UserDAO {
   CollectionReference connection =
       FirebaseFirestore.instance.collection('users');
 
-  UserDAOFirestore(this.connection);
+  UserDAOFirestore();
 
   @override
   void addUser(User user) async {

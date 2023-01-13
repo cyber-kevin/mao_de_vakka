@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mao_de_vakka/app/models/User.dart';
 import 'package:mao_de_vakka/app/views/SignUpPage.dart';
-import 'package:mao_de_vakka/app/views/InitialScreenPage.dart';
+import 'package:mao_de_vakka/app/views/InitialScreen.dart';
 
-main() {
-  runApp(const InitialScreen());
+main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MaterialApp(
+    home: InitialScreen(),
+  ));
 }

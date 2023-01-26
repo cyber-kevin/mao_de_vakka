@@ -11,33 +11,34 @@ class DefaultButton extends StatelessWidget {
       required this.text,
       required this.backgroundColor,
       this.fontColor = Colors.white,
-      this.borderColor});
+      this.borderColor,
+      required Null Function() onPressed});
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           width: 250,
           height: 50,
           decoration: BoxDecoration(
-            color: this.backgroundColor,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            color: backgroundColor,
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
             border: Border.all(
               width: 1.0,
-              color: (borderColor != null ? borderColor : backgroundColor),
+              color: (borderColor ?? backgroundColor),
             ),
           ),
           child: TextButton(
               child: Center(
-                child: Text(this.text,
+                child: Text(text,
                     style:
                         TextStyle(color: fontColor, fontFamily: 'Montserrat')),
               ),
               onPressed: () => {}),
         )
       ],
-      mainAxisAlignment: MainAxisAlignment.center,
     );
   }
 }
@@ -63,7 +64,7 @@ class UnderscoreButton extends StatelessWidget {
           ),
           child: TextButton(
               child: Center(
-                child: Text(this.text,
+                child: Text(text,
                     style: TextStyle(color: color, fontFamily: 'Montserrat')),
               ),
               onPressed: () => {}),

@@ -8,7 +8,7 @@ import 'package:mao_de_vakka/app/views/InitialScreen.dart';
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: InitialScreen(),
   ));
 }

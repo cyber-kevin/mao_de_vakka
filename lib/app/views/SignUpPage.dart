@@ -5,6 +5,8 @@ import 'package:mao_de_vakka/app/models/User.dart';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'PresentationScreen.dart';
+
 class SignUpPage extends StatefulWidget {
   SignUpPage({super.key});
 
@@ -47,7 +49,7 @@ class _SignUpPage extends State<SignUpPage> {
           child: Center(
         child: Column(
           children: [
-            Align(
+            const Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.only(top: 70, left: 50),
@@ -62,12 +64,12 @@ class _SignUpPage extends State<SignUpPage> {
                   ),
                 )),
             Container(
+              margin: const EdgeInsets.only(bottom: 20),
               child: Image.asset(
                 'assets/images/woman_money.png',
                 height: 300,
                 width: 350,
               ),
-              margin: EdgeInsets.only(bottom: 20),
             ),
             Form(
                 child: Column(
@@ -110,6 +112,8 @@ class _SignUpPage extends State<SignUpPage> {
                               educationLevel: educationLevelController.text);
 
                           dataBase.addUser(user);
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) => const PresentationPage()));
                         } else {
                           print('ajeite');
                         }

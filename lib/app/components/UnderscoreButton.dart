@@ -9,6 +9,7 @@ class UnderscoreButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           width: 200,
@@ -21,12 +22,12 @@ class UnderscoreButton extends StatelessWidget {
           child: TextButton(
               child: Center(
                 child: Text(text,
-                    style: TextStyle(color: color, fontFamily: 'Montserrat')),
+                    style: TextStyle(color: color, fontFamily: 'Montserrat'),
+                    textAlign: TextAlign.center),
               ),
               onPressed: () => {}),
         )
       ],
-      mainAxisAlignment: MainAxisAlignment.center,
     );
   }
 }

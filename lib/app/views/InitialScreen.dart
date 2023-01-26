@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mao_de_vakka/app/views/PresentationScreen.dart';
 import 'package:mao_de_vakka/app/views/SignUpPage.dart';
 import 'package:mao_de_vakka/app/components/DefaultButton.dart';
 import 'package:mao_de_vakka/app/components/UnderscoreButton.dart';
@@ -45,7 +46,7 @@ class InitialScreen extends StatelessWidget {
               ),
             ),
             // ****** CARD *******
-            Container(
+            SizedBox(
               width: 340,
               height: 290,
               child: Card(
@@ -90,7 +91,7 @@ class InitialScreen extends StatelessWidget {
             ),
             // ****** 'AKKAV Group' TEXT *******
             const Padding(
-              padding: EdgeInsets.only(top: 160),
+              padding: EdgeInsets.only(top: 53),
               child: Text(
                 'AKKAV Group',
                 style: TextStyle(

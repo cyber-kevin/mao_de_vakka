@@ -66,7 +66,7 @@ flutter:
   assets: 
     - assets/images/vakka_logo.png
     - assets/images/woman_money.png
-    - assets/images/Manage_money_bro_1.png
+    - assets/images/woman2_money.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

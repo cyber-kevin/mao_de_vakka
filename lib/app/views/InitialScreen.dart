@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mao_de_vakka/app/views/PresentationScreen.dart';
 import 'package:mao_de_vakka/app/views/SignUpPage.dart';
+import 'package:mao_de_vakka/app/views/SignInPage.dart';
 import 'package:mao_de_vakka/app/components/DefaultButton.dart';
 import 'package:mao_de_vakka/app/components/UnderscoreButton.dart';
 
@@ -46,7 +46,7 @@ class InitialScreen extends StatelessWidget {
               ),
             ),
             // ****** CARD *******
-            SizedBox(
+            Container(
               width: 340,
               height: 290,
               child: Card(
@@ -76,7 +76,10 @@ class InitialScreen extends StatelessWidget {
                               const Color.fromARGB(255, 241, 241, 241),
                           fontColor: const Color.fromARGB(255, 34, 197, 94),
                           borderColor: const Color.fromARGB(255, 34, 197, 94),
-                          onPressed: () {}),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => SignInPage()));
+                          }),
                     ),
                     // ****** 'Continuar sem login' BUTTON *******
                     const Padding(
@@ -91,7 +94,7 @@ class InitialScreen extends StatelessWidget {
             ),
             // ****** 'AKKAV Group' TEXT *******
             const Padding(
-              padding: EdgeInsets.only(top: 53),
+              padding: EdgeInsets.only(top: 160),
               child: Text(
                 'AKKAV Group',
                 style: TextStyle(

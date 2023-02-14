@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mao_de_vakka/app/components/InputField.dart';
 import 'package:mao_de_vakka/app/components/DefaultButton.dart';
+import 'package:mao_de_vakka/app/components/DefaultTitle.dart';
 import 'package:mao_de_vakka/app/models/User.dart';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-
-import 'PresentationScreen.dart';
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({super.key});
@@ -49,20 +48,7 @@ class _SignUpPage extends State<SignUpPage> {
           child: Center(
         child: Column(
           children: [
-            const Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(top: 70, left: 50),
-                  child: Text(
-                    'Cadastro',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 51, 51, 51),
-                      fontSize: 30,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                )),
+            const DefaultTitle(text: 'Cadastro'),
             Container(
               margin: const EdgeInsets.only(bottom: 20),
               child: Image.asset(
@@ -78,14 +64,11 @@ class _SignUpPage extends State<SignUpPage> {
                 InputField(
                   text: 'Email',
                   controller: emailController,
-                  onChanged: (value) {
-                    print(value);
-                  },
                 ),
                 InputField(
                     text: 'Data de nascimento',
                     controller: birthdateController),
-                InputField(text: 'Gênero', controller: genderController),
+                InputField(text: 'GÃªnero', controller: genderController),
                 InputField(
                     text: 'Estado Civil', controller: maritalStatusController),
                 InputField(
@@ -112,8 +95,6 @@ class _SignUpPage extends State<SignUpPage> {
                               educationLevel: educationLevelController.text);
 
                           dataBase.addUser(user);
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => const PresentationPage()));
                         } else {
                           print('ajeite');
                         }

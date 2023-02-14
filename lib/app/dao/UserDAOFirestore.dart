@@ -16,8 +16,18 @@ class UserDAOFirestore implements UserDAO {
   }
 
   @override
-  dynamic findUser(String email, String password) {
-    return true;
+  dynamic findUser(String email, String password) async {
+    var json = await connection.get();
+    var user = null;
+    print(json.docs.map((e) {
+      var data = e.data() as Map;
+      if ((data['email'] == email) && (data['password'] == password)) {
+        print('in');
+        user = data;
+      }
+    }));
+
+    return user;
   }
 
   @override

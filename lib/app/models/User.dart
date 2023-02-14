@@ -59,61 +59,18 @@ class User {
         'entryList': _entryList,
       };
 
-  // static User fromJson(Map<String, dynamic> json) {
-  //   User user = User(
-  //       json['name'], json['email'], (json['birthday'] as Timestamp).toDate());
-  //   user.income = json['income'];
-  //   user._entryList = json['entryList'];
-  //   user._saveMoney = json['saveMoney'];
-
-  //   return user;
-  // }
+  static User fromJson(Map<String, dynamic> json) {
+    User user = User(
+        name: json['name'],
+        email: json['email'],
+        password: json['password'],
+        birthdate: (json['birthdate'] as Timestamp).toDate(),
+        gender: json['gender'],
+        maritalStatus: json['maritalStatus'],
+        educationLevel: json['educationLevel']);
+    return user;
+  }
 }
-
-/*
-User data example:
-
-name = Enzo Baptista
-email = enzobaptista@gmail.com
-birthDate = 2000-01-01
-income = 974.97
-
-** Each index in the list represents a month, like:
-
-  saveMoney['2022'][0] --> January save money
-  saveMoney['2022'][1] --> February save money
-
-**
-
-saveMoney = {
-
-  '2022' = [50.0, 70.0, 0.0, 0.0, 0.0, 40.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-  '2023' = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-  '2024' = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-  '2025' = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-  '2026' = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-
-}
-
-** Each column in the list represents the entries in an specific month, like: 
-
-  entryList['2022'][0] --> January entries
-  entryList['2022'][1] --> February entries
-
-**
-
-entryList = {
-
-  '2022' = [[entry, entry], [entry], [], [], [], [], [], [], [], [], [], []]
-  '2023' = [[], [], [], [], [], [], [], [], [], [], [], []]
-  '2024' = [[], [], [], [], [], [], [], [], [], [], [], []]
-  '2025' = [[], [], [], [], [], [], [], [], [], [], [], []]
-  '2026' = [[], [], [], [], [], [], [], [], [], [], [], []]
-
-}
-
-
-*/
 
 abstract class UserDAO {
   void addUser(User user);

@@ -25,25 +25,25 @@ class User {
       required this.maritalStatus,
       required this.educationLevel});
 
-  List<Entry> getEntryList(String year, Month month) {
-    return _entryList[year]![month.value - 1];
-  }
+  // List<Entry> getEntryList(String year, Month month) {
+  //   return _entryList[year]![month.value - 1];
+  // }
 
-  void addEntry(Entry entry, String year, Month month) {
-    _entryList[year]![month.value - 1].add(entry);
-  }
+  // void addEntry(Entry entry, String year, Month month) {
+  //   _entryList[year]![month.value - 1].add(entry);
+  // }
 
-  void deleteEntry(Entry entry, String year, Month month) {
-    _entryList[year]![month.value - 1].remove(entry);
-  }
+  // void deleteEntry(Entry entry, String year, Month month) {
+  //   _entryList[year]![month.value - 1].remove(entry);
+  // }
 
-  double getSaveMoney(String year, Month month) {
-    return _saveMoney[year]![month.value - 1];
-  }
+  // double getSaveMoney(String year, Month month) {
+  //   return _saveMoney[year]![month.value - 1];
+  // }
 
-  void setSaveMoney(double value, String year, Month month) {
-    _saveMoney[year]![month.value - 1] = value;
-  }
+  // void setSaveMoney(double value, String year, Month month) {
+  //   _saveMoney[year]![month.value - 1] = value;
+  // }
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -70,11 +70,4 @@ class User {
         educationLevel: json['educationLevel']);
     return user;
   }
-}
-
-abstract class UserDAO {
-  void addUser(User user);
-  dynamic findUser(String email, String password);
-  void update(User user, String field, dynamic value);
-  void delete();
 }

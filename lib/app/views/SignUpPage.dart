@@ -1,10 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mao_de_vakka/app/components/InputField.dart';
 import 'package:mao_de_vakka/app/components/DefaultButton.dart';
 import 'package:mao_de_vakka/app/components/DefaultTitle.dart';
-import 'package:mao_de_vakka/app/models/User.dart';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mao_de_vakka/app/views/InitialScreen.dart';
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({super.key});
@@ -22,8 +24,6 @@ class _SignUpPage extends State<SignUpPage> {
   TextEditingController educationLevelController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  UserDAOFirestore dataBase = UserDAOFirestore();
-
   bool areAllFieldsFilled() {
     return nameController.text.isNotEmpty &&
         emailController.text.isNotEmpty &&
@@ -38,6 +38,14 @@ class _SignUpPage extends State<SignUpPage> {
   void dispose() {
     emailController.dispose();
     super.dispose();
+  }
+
+  String _textError = '';
+
+  void _updateState(String message) {
+    setState(() {
+      _textError = message;
+    });
   }
 
   @override
@@ -68,7 +76,7 @@ class _SignUpPage extends State<SignUpPage> {
                 InputField(
                     text: 'Data de nascimento',
                     controller: birthdateController),
-                InputField(text: 'GÃªnero', controller: genderController),
+                InputField(text: 'Gênero', controller: genderController),
                 InputField(
                     text: 'Estado Civil', controller: maritalStatusController),
                 InputField(
@@ -78,25 +86,55 @@ class _SignUpPage extends State<SignUpPage> {
                     controller: passwordController,
                     obscureText: true),
                 Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  child: Text(
+                    _textError,
+                    style: TextStyle(
+                        color: Colors.red[400],
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w600),
+                  ),
+                ),
+                Container(
                   margin: const EdgeInsets.only(top: 63, bottom: 33),
                   child: DefaultButton(
                       text: 'Confirmar cadastro',
                       backgroundColor: const Color.fromARGB(255, 34, 197, 94),
-                      onPressed: () {
+                      onPressed: () async {
                         if (areAllFieldsFilled()) {
-                          User user = User(
-                              name: nameController.text,
-                              email: emailController.text,
-                              password: passwordController.text,
-                              birthdate:
-                                  DateTime.parse(birthdateController.text),
-                              gender: genderController.text,
-                              maritalStatus: maritalStatusController.text,
-                              educationLevel: educationLevelController.text);
+                          try {
+                            UserCredential userCredential = await FirebaseAuth
+                                .instance
+                                .createUserWithEmailAndPassword(
+                                    email: emailController.text,
+                                    password: passwordController.text);
 
-                          dataBase.addUser(user);
+                            await UserDAOFirestore.addUser(
+                                userCredential.user!.uid,
+                                nameController.text,
+                                genderController.text,
+                                maritalStatusController.text,
+                                educationLevelController.text,
+                                DateTime.parse(birthdateController.text));
+
+                            _updateState('User has been registered =)');
+
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => InitialScreen()));
+                          } on FirebaseAuthException catch (e) {
+                            if (e.code == 'weak-password') {
+                              _updateState('A senha é muito fraca');
+                            }
+                            if (e.code == 'email-already-in-use') {
+                              _updateState(
+                                  'Uma conta já existe para este e-mail');
+                            } else {
+                              _updateState('Erro: Tente novamente');
+                              print(e.code);
+                            }
+                          }
                         } else {
-                          print('ajeite');
+                          _updateState('Por favor, preencha todos os campos');
                         }
                       },
                       width: 300),

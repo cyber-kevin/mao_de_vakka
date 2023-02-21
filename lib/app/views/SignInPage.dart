@@ -1,10 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mao_de_vakka/app/components/DefaultTitle.dart';
 import 'package:mao_de_vakka/app/components/DefaultButton.dart';
 import 'package:mao_de_vakka/app/components/InputField.dart';
-import 'package:mao_de_vakka/app/models/User.dart';
+import 'package:mao_de_vakka/app/models/User.dart' as UserApp;
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignInPage extends StatefulWidget {
   SignInPage({super.key});
@@ -53,14 +55,42 @@ class _SignInPage extends State<SignInPage> {
                           text: 'Confirmar',
                           backgroundColor:
                               const Color.fromARGB(255, 34, 197, 94),
-                          onPressed: () async {
-                            dynamic user = await dataBase.findUser(
-                                emailController.text, passwordController.text);
+                          // onPressed: () async {
+                          //   dynamic user = await dataBase.findUser(
+                          //       emailController.text, passwordController.text);
 
-                            if (user != null) {
-                              print('OK');
-                            } else {
-                              print('NO');
+                          //   if (user != null) {
+                          //     print('OK');
+                          //   } else {
+                          //     print('NO');
+                          //   }
+                          // },
+                          onPressed: () async {
+                            final FirebaseAuth _auth = FirebaseAuth.instance;
+
+                            try {
+                              final UserCredential userCredential =
+                                  await _auth.signInWithEmailAndPassword(
+                                      email: emailController.text,
+                                      password: passwordController.text);
+
+                              if (userCredential != null) {
+                                User? user = userCredential.user;
+                                String uid = user!.uid;
+
+                                DocumentSnapshot snapshot =
+                                    await FirebaseFirestore.instance
+                                        .collection("users")
+                                        .doc(user.uid)
+                                        .get();
+                                print(snapshot);
+
+                                Object? userData = snapshot.data();
+
+                                print(userData);
+                              }
+                            } on FirebaseAuthException catch (e) {
+                              print(e.message);
                             }
                           },
                           width: 300),

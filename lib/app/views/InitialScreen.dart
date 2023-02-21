@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mao_de_vakka/app/views/SignUpPage.dart';
 import 'package:mao_de_vakka/app/views/SignInPage.dart';
+import 'package:mao_de_vakka/app/views/HomePage.dart';
 import 'package:mao_de_vakka/app/components/DefaultButton.dart';
 import 'package:mao_de_vakka/app/components/UnderscoreButton.dart';
 
@@ -77,8 +78,8 @@ class InitialScreen extends StatelessWidget {
                           fontColor: const Color.fromARGB(255, 34, 197, 94),
                           borderColor: const Color.fromARGB(255, 34, 197, 94),
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_) => SignInPage()));
+                            Navigator.of(context).push(
+                                MaterialPageRoute(builder: (_) => HomePage()));
                           }),
                     ),
                     // ****** 'Continuar sem login' BUTTON *******

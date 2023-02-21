@@ -1,23 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mao_de_vakka/app/models/User.dart';
 
-class UserDAOFirestore implements UserDAO {
-  CollectionReference connection =
+class UserDAOFirestore {
+  static CollectionReference collection =
       FirebaseFirestore.instance.collection('users');
 
-  UserDAOFirestore();
-
-  @override
-  void addUser(User user) async {
-    DocumentReference docUser = connection.doc();
-    user.id = docUser.id;
-    final json = user.toJson();
-    await docUser.set(json);
+  static Future<void> addUser(String userId, String name, String gender,
+      String maritalStatus, String educationLevel, DateTime birthDate) async {
+    // DocumentReference docUser = connection.doc();
+    // user.id = docUser.id;
+    // final json = user.toJson();
+    // await docUser.set(json);
+    collection.doc(userId).set({
+      'name': name,
+      'gender': gender,
+      'maritalStatus': maritalStatus,
+      'educationLevel': educationLevel,
+      'birthDate': birthDate
+    });
   }
 
   @override
-  dynamic findUser(String email, String password) async {
-    var json = await connection.get();
+  static dynamic findUser(String email, String password) async {
+    var json = await collection.get();
     var user = null;
     print(json.docs.map((e) {
       var data = e.data() as Map;
@@ -31,13 +36,13 @@ class UserDAOFirestore implements UserDAO {
   }
 
   @override
-  void update(User user, String field, dynamic value) {
-    DocumentReference docUser = connection.doc(user.id);
+  static void update(User user, String field, dynamic value) {
+    DocumentReference docUser = collection.doc(user.id);
     docUser.update({
       field: value,
     });
   }
 
   @override
-  void delete() {}
+  static void delete() {}
 }

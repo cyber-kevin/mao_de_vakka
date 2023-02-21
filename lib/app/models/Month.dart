@@ -1,18 +1,32 @@
-enum Month {
-  janeiro(1),
-  fevereiro(2),
-  marco(3),
-  abril(4),
-  maio(5),
-  junho(6),
-  julho(7),
-  agosto(8),
-  setembro(9),
-  outubro(10),
-  novembro(11),
-  dezembro(12);
-
-  final int value;
-
-  const Month(this.value);
+class Month {
+  static String getMonth(int month) {
+    switch (month) {
+      case 1:
+        return 'Janeiro';
+      case 2:
+        return 'Fevereiro';
+      case 3:
+        return 'Março';
+      case 4:
+        return 'Abril';
+      case 5:
+        return 'Maio';
+      case 6:
+        return 'Junho';
+      case 7:
+        return 'Julho';
+      case 8:
+        return 'Agosto';
+      case 9:
+        return 'Setembro';
+      case 10:
+        return 'Outubro';
+      case 11:
+        return 'Novembro';
+      case 12:
+        return 'Dezembro';
+      default:
+        return ' ';
+    }
+  }
 }

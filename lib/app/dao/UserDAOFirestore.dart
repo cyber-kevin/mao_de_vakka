@@ -6,43 +6,84 @@ class UserDAOFirestore {
       FirebaseFirestore.instance.collection('users');
 
   static Future<void> addUser(String userId, String name, String gender,
-      String maritalStatus, String educationLevel, DateTime birthDate) async {
-    // DocumentReference docUser = connection.doc();
-    // user.id = docUser.id;
-    // final json = user.toJson();
-    // await docUser.set(json);
-    collection.doc(userId).set({
-      'name': name,
-      'gender': gender,
-      'maritalStatus': maritalStatus,
-      'educationLevel': educationLevel,
-      'birthDate': birthDate
-    });
+    String maritalStatus, String educationLevel, DateTime birthDate) async {
+
+      int currentYear = DateTime.now().year;
+
+      print('entrou');
+
+      collection.doc(userId).set({
+        'name': name,
+        'gender': gender,
+        'maritalStatus': maritalStatus,
+        'educationLevel': educationLevel,
+        'birthDate': birthDate,
+        'income': 0,
+        'entryList': {
+          '$currentYear': {
+            '1': [],
+            '2': [],
+            '3': [],
+            '4': [],
+            '5': [],
+            '7': [],
+            '8': [],
+            '9': [],
+            '10': [],
+            '11': [],
+            '12': [],
+          },
+        },
+        'saveMoney': {
+          '$currentYear': {
+            '1': [],
+            '2': [],
+            '3': [],
+            '4': [],
+            '5': [],
+            '6': [],
+            '7': [],
+            '8': [],
+            '9': [],
+            '10': [],
+            '11': [],
+            '12': [],
+          },
+        }
+      });
   }
 
   @override
-  static dynamic findUser(String email, String password) async {
-    var json = await collection.get();
-    var user = null;
-    print(json.docs.map((e) {
-      var data = e.data() as Map;
-      if ((data['email'] == email) && (data['password'] == password)) {
-        print('in');
-        user = data;
-      }
-    }));
+  static Future<Map<String, dynamic>> findUser(String id) async {
+    DocumentSnapshot<Object?> snapshot = await collection.doc(id).get();
+    Map<String, dynamic> userData = toJson(snapshot, id);
 
-    return user;
+    return userData;
   }
 
   @override
-  static void update(User user, String field, dynamic value) {
-    DocumentReference docUser = collection.doc(user.id);
-    docUser.update({
-      field: value,
-    });
+  static void update(Map<String, dynamic> userData) async{
+    DocumentReference docUser = collection.doc(userData['id']);
+    await docUser.update(userData);
   }
 
   @override
   static void delete() {}
+
+  static Map<String, dynamic> toJson(DocumentSnapshot<Object?> snapshot, String id) {
+
+    Map<String, dynamic> userData = {
+      'id': id,
+      'name': snapshot.get('name'),
+      'income': snapshot.get('income'),
+      'birthDate': snapshot.get('birthDate'),
+      'gender': snapshot.get('gender'),
+      'maritalStatus': snapshot.get('maritalStatus'),
+      'educationLevel': snapshot.get('educationLevel'),
+      'entryList': snapshot.get('entryList'),
+      'saveMoney': snapshot.get('saveMoney')
+  };
+
+  return userData;
+}
 }

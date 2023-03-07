@@ -5,13 +5,15 @@ class TransparentButton extends StatelessWidget {
   final Color color;
   final double fontSize;
   bool isSelected;
+  final VoidCallback onPressed;
 
   TransparentButton(
       {super.key,
       required this.text,
       required this.color,
       this.fontSize = 17,
-      this.isSelected = false});
+      this.isSelected = false,
+      required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class TransparentButton extends StatelessWidget {
           width: (fontSize == 17) ? 100 : 150,
           height: 40,
           child: TextButton(
+              onPressed: onPressed,
               child: Center(
                 child: Text(text,
                     style: TextStyle(
@@ -29,8 +32,7 @@ class TransparentButton extends StatelessWidget {
                         fontFamily: 'Montserrat',
                         fontSize: fontSize),
                     textAlign: TextAlign.center),
-              ),
-              onPressed: () {}),
+              )),
         )
       ],
     );

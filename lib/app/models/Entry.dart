@@ -11,4 +11,13 @@ class Entry {
         category = Category.Saldo;
 
   Entry.expense(this.title, this.value, this.category);
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'category': category.name,
+      'value': value,
+      'date': date,
+    };
+  }
 }

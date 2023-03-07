@@ -79,7 +79,7 @@ class InitialScreen extends StatelessWidget {
                           borderColor: const Color.fromARGB(255, 34, 197, 94),
                           onPressed: () {
                             Navigator.of(context).push(
-                                MaterialPageRoute(builder: (_) => HomePage()));
+                                MaterialPageRoute(builder: (_) => SignInPage()));
                           }),
                     ),
                     // ****** 'Continuar sem login' BUTTON *******

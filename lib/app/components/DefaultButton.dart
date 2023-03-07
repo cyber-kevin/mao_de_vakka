@@ -8,6 +8,7 @@ class DefaultButton extends StatelessWidget {
   final VoidCallback onPressed;
   double width;
   double height;
+  MainAxisAlignment alignment;
 
   DefaultButton(
       {super.key,
@@ -17,12 +18,13 @@ class DefaultButton extends StatelessWidget {
       this.fontColor = Colors.white,
       this.borderColor,
       this.width = 250,
-      this.height = 50});
+      this.height = 50,
+      this.alignment = MainAxisAlignment.center});
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: alignment,
       children: [
         Container(
           width: width,

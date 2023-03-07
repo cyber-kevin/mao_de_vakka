@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mao_de_vakka/app/components/DefaultTitle.dart';
@@ -7,6 +9,7 @@ import 'package:mao_de_vakka/app/models/User.dart' as UserApp;
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mao_de_vakka/app/views/HomePage.dart';
 
 class SignInPage extends StatefulWidget {
   SignInPage({super.key});
@@ -20,6 +23,13 @@ class _SignInPage extends State<SignInPage> {
   TextEditingController passwordController = TextEditingController();
 
   UserDAOFirestore dataBase = UserDAOFirestore();
+  String _textError = '';
+
+   void _updateState(String message) {
+    setState(() {
+      _textError = message;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +60,10 @@ class _SignInPage extends State<SignInPage> {
                     InputField(text: 'E-mail:', controller: emailController),
                     InputField(text: 'Senha:', controller: passwordController),
                     Container(
+                      child: Text(_textError, style: TextStyle(color: Colors.red, fontWeight: FontWeight.w600),),
+                      margin: EdgeInsets.only(top: 10),
+                    ),
+                    Container(
                       margin: const EdgeInsets.only(top: 63, bottom: 33),
                       child: DefaultButton(
                           text: 'Confirmar',
@@ -74,23 +88,42 @@ class _SignInPage extends State<SignInPage> {
                                       email: emailController.text,
                                       password: passwordController.text);
 
+                              print(userCredential);
+
                               if (userCredential != null) {
                                 User? user = userCredential.user;
-                                String uid = user!.uid;
+                                print(user);
+                                String uid = user!.uid; 
 
                                 DocumentSnapshot snapshot =
                                     await FirebaseFirestore.instance
                                         .collection("users")
                                         .doc(user.uid)
                                         .get();
+
                                 print(snapshot);
 
-                                Object? userData = snapshot.data();
+                                print("DATA:");
+                                print(snapshot.data());
+
+                                Map<String, dynamic> userData = await UserDAOFirestore.findUser(uid);
 
                                 print(userData);
+
+                                Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => HomePage(userData: userData)));
+
                               }
                             } on FirebaseAuthException catch (e) {
-                              print(e.message);
+                              if (e.code == 'user-not-found') {
+                                _updateState('Este usuário não existe');
+                              }
+                              else if (e.code == 'wrong-password') {
+                                _updateState('A senha está incorreta');
+                              }
+                              else {
+                                _updateState('Erro: Tente novamente mais tarde');
+                              }
                             }
                           },
                           width: 300),

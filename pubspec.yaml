@@ -67,6 +67,7 @@ flutter:
   uses-material-design: true
   assets: 
     - assets/images/vakka_logo.png
+    - assets/images/manage.png
     - assets/images/woman_money.png
     - assets/images/woman2_money.png
 

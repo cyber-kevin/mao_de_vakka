@@ -8,6 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mao_de_vakka/app/views/HomePage.dart';
 import 'package:mao_de_vakka/app/views/InitialScreen.dart';
+import 'package:mao_de_vakka/app/views/PresentationScreen.dart';
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({super.key});
@@ -118,20 +119,23 @@ class _SignUpPage extends State<SignUpPage> {
                                 educationLevelController.text,
                                 DateTime.parse(birthdateController.text));
 
-                            Map<String, dynamic> userData = await UserDAOFirestore.findUser(userCredential.user!.uid);
+                            Map<String, dynamic> userData =
+                                await UserDAOFirestore.findUser(
+                                    userCredential.user!.uid);
 
                             print(userData);
 
                             _updateState('User has been registered =)');
 
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_) => HomePage(userData: userData,)));
+                                builder: (_) => PresentationPage(
+                                      userData: userData,
+                                    )));
                           } on FirebaseAuthException catch (e) {
                             print(e.code);
                             if (e.code == 'weak-password') {
                               _updateState('A senha é muito fraca');
-                            }
-                            else if (e.code == 'email-already-in-use') {
+                            } else if (e.code == 'email-already-in-use') {
                               _updateState(
                                   'Uma conta já existe para este e-mail');
                             } else {

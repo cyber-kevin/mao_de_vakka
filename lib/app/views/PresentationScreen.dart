@@ -3,8 +3,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:mao_de_vakka/app/components/UnderscoreButton.dart';
 import 'package:flutter/material.dart';
 
+import '../dao/UserDAOFirestore.dart';
+import 'HomePage.dart';
+
 class PresentationPage extends StatefulWidget {
-  const PresentationPage({super.key});
+  final Map<String, dynamic> userData;
+  const PresentationPage({super.key, this.userData = const {}});
 
   @override
   State<PresentationPage> createState() => _PresentationPageState();
@@ -22,7 +26,7 @@ class _PresentationPageState extends State<PresentationPage> {
             Container(
               margin: const EdgeInsets.only(top: 100),
               child: Image.asset(
-                'assets/images/Manage_money_bro_1.png',
+                'assets/images/manage.png',
                 height: 437,
                 width: 422,
               ),
@@ -48,8 +52,13 @@ class _PresentationPageState extends State<PresentationPage> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 80, right: 20),
                   child: ElevatedButton(
-                    onPressed: () {
-                      // Adicione a ação do botão aqui
+                    onPressed: () async {
+                      var userData = widget.userData;
+
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => HomePage(
+                                userData: userData,
+                              )));
                     },
                     style: ButtonStyle(
                         minimumSize:

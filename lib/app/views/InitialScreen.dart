@@ -50,7 +50,7 @@ class InitialScreen extends StatelessWidget {
                 // ****** CARD *******
                 Container(
                   width: 340,
-                  height: 290,
+                  height: 220,
                   child: Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
@@ -85,13 +85,6 @@ class InitialScreen extends StatelessWidget {
                                     builder: (_) => SignInPage()));
                               }),
                         ),
-                        // ****** 'Continuar sem login' BUTTON *******
-                        const Padding(
-                            padding: EdgeInsets.only(top: 46),
-                            child: UnderscoreButton(
-                              text: 'Continuar sem login',
-                              color: Color.fromARGB(255, 34, 197, 94),
-                            )),
                       ],
                     ),
                   ),

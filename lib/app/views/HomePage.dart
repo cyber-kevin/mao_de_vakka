@@ -14,6 +14,8 @@ import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:mao_de_vakka/app/models/Entry.dart';
 
+import 'ConfigPage.dart';
+
 class HomePage extends StatefulWidget {
   final Map<String, dynamic> userData;
   const HomePage({super.key, this.userData = const {}});
@@ -68,12 +70,30 @@ class _HomePage extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     IconButton(
-                        onPressed: () {}, icon: const Icon(Icons.home_rounded)),
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.home_rounded,
+                          color: Colors.white,
+                        )),
                     IconButton(
-                        onPressed: () {}, icon: const Icon(Icons.attach_money)),
+                        onPressed: () {},
+                        icon: const Icon(Icons.attach_money),
+                        color: Colors.black),
                     IconButton(
-                        onPressed: () {}, icon: const Icon(Icons.bar_chart)),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.person))
+                        onPressed: () {},
+                        icon: const Icon(Icons.bar_chart),
+                        color: Colors.black),
+                    IconButton(
+                        onPressed: () async {
+                          var userData = widget.userData;
+
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) => ConfigPage(
+                                    userData: userData,
+                                  )));
+                        },
+                        icon: const Icon(Icons.person),
+                        color: Colors.black)
                   ],
                 ),
               ),
@@ -85,7 +105,7 @@ class _HomePage extends State<HomePage> {
             children: [
               DefaultTitle(
                 text:
-                    'Olá, ' + widget.userData['name'].toString().split(" ")[0],
+                    'Olá, ${widget.userData['name'].toString().split(" ")[0]}',
               ),
               Container(
                 margin: const EdgeInsets.only(top: 30),
@@ -136,9 +156,7 @@ class _HomePage extends State<HomePage> {
                 margin: const EdgeInsets.only(top: 5),
               ),
               Text(
-                "R\$ " +
-                    intl.NumberFormat("0.00", "pt_BR")
-                        .format(widget.userData['income']),
+                "R\$ ${intl.NumberFormat("0.00", "pt_BR").format(widget.userData['income'])}",
                 style: const TextStyle(
                     fontFamily: 'Montserrat',
                     fontWeight: FontWeight.w600,

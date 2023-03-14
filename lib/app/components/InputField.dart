@@ -32,6 +32,10 @@ class InputField extends StatelessWidget {
               width: 300,
               height: 50,
               child: TextFormField(
+                style: const TextStyle(
+                    color: Color.fromARGB(255, 34, 197, 94),
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500),
                 controller: controller,
                 obscureText: obscureText,
                 onChanged: onChanged,

@@ -1,14 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'dart:core';
-import 'package:intl/intl.dart' as intl;
-import 'package:mao_de_vakka/app/components/UnderscoreInputField.dart';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:mao_de_vakka/app/models/Entry.dart';
 import 'package:mao_de_vakka/app/views/InitialScreen.dart';
-
 import 'HomePage.dart';
 
 class ConfigPage extends StatefulWidget {
@@ -73,7 +67,11 @@ class _ConfigPage extends State<ConfigPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const Padding(padding: EdgeInsets.only(top: 50)),
-              const Text('Personalizar perfil', style: TextStyle(fontSize: 20)),
+              const Text('Personalizar perfil',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w600)),
               const Padding(padding: EdgeInsets.only(top: 60)),
               CircleAvatar(
                 radius: 120,
@@ -87,20 +85,31 @@ class _ConfigPage extends State<ConfigPage> {
                 height: 80,
                 width: 360,
                 child: TextFormField(
+                    style: const TextStyle(
+                        color: Color.fromARGB(255, 34, 197, 94),
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w500),
                     decoration: const InputDecoration(
-                      suffixIcon: Icon(Icons.edit),
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 34, 197, 94),
+                              width: 1.5)),
+                      suffixIcon: Icon(
+                        Icons.edit,
+                        color: Colors.black,
+                      ),
                       contentPadding: EdgeInsets.only(top: 10),
                       labelText: 'Nome',
-                      labelStyle:
-                          TextStyle(color: Colors.black, fontSize: 20.0),
+                      labelStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.0,
+                          fontFamily: 'Poppins'),
                       enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.green, width: 3)),
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 34, 197, 94),
+                              width: 1)),
                     ),
                     initialValue: widget.userData['name'],
-                    style: const TextStyle(
-                        color: Color.fromARGB(255, 165, 165, 165),
-                        fontSize: 20.0),
                     onChanged: (value) {
                       setState(() {
                         UserDAOFirestore.update(widget.userData);
@@ -112,20 +121,28 @@ class _ConfigPage extends State<ConfigPage> {
                 height: 80,
                 width: 360,
                 child: TextFormField(
+                    style: const TextStyle(
+                        color: Color.fromARGB(255, 34, 197, 94),
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w500),
                     decoration: const InputDecoration(
-                      suffixIcon: Icon(Icons.edit),
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 34, 197, 94),
+                              width: 1.5)),
+                      suffixIcon: Icon(Icons.edit, color: Colors.black),
                       contentPadding: EdgeInsets.only(top: 10),
                       labelText: 'Email',
-                      labelStyle:
-                          TextStyle(color: Colors.black, fontSize: 20.0),
+                      labelStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18.0,
+                          fontFamily: 'Poppins'),
                       enabledBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.green, width: 3)),
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 34, 197, 94),
+                              width: 1)),
                     ),
                     initialValue: widget.userData['email'],
-                    style: const TextStyle(
-                        color: Color.fromARGB(255, 165, 165, 165),
-                        fontSize: 20.0),
                     onChanged: (value) {
                       setState(() {
                         widget.userData['email'] = value;

@@ -1,14 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mao_de_vakka/app/components/InputField.dart';
+import 'package:mao_de_vakka/app/components/RadioSelection.dart';
+import 'package:mao_de_vakka/app/components/TitleRadioSelection.dart';
+import 'package:mao_de_vakka/app/components/DateInputField.dart';
 import 'package:mao_de_vakka/app/components/DefaultButton.dart';
 import 'package:mao_de_vakka/app/components/DefaultTitle.dart';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mao_de_vakka/app/views/HomePage.dart';
 import 'package:mao_de_vakka/app/views/InitialScreen.dart';
 import 'package:mao_de_vakka/app/views/PresentationScreen.dart';
+import 'package:intl/intl.dart';
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({super.key});
@@ -24,6 +26,7 @@ class _SignUpPage extends State<SignUpPage> {
   TextEditingController genderController = TextEditingController();
   TextEditingController maritalStatusController = TextEditingController();
   TextEditingController educationLevelController = TextEditingController();
+  TextEditingController incomeLevel = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   bool areAllFieldsFilled() {
@@ -48,6 +51,20 @@ class _SignUpPage extends State<SignUpPage> {
     setState(() {
       _textError = message;
     });
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null) {
+      setState(() {
+        birthdateController.text = DateFormat('dd/MM/yyyy').format(picked);
+      });
+    }
   }
 
   @override
@@ -75,14 +92,44 @@ class _SignUpPage extends State<SignUpPage> {
                   text: 'Email',
                   controller: emailController,
                 ),
-                InputField(
+                DateInputField(
                     text: 'Data de nascimento',
-                    controller: birthdateController),
-                InputField(text: 'Gênero', controller: genderController),
-                InputField(
-                    text: 'Estado Civil', controller: maritalStatusController),
-                InputField(
-                    text: 'Escolaridade', controller: educationLevelController),
+                    controller: birthdateController,
+                    selectDate: _selectDate),
+                TitleRadioSelection(text: 'Gênero'),
+                RadioSelection(
+                  controller: genderController,
+                  listValues: const ['Masculino', 'Feminino', 'Outro'],
+                ),
+                TitleRadioSelection(text: 'Estado Civil'),
+                RadioSelection(
+                  controller: maritalStatusController,
+                  listValues: const ['Solteiro', 'Casado', 'Divorciado'],
+                ),
+                TitleRadioSelection(text: 'Escolaridade'),
+                RadioSelection(
+                  controller: educationLevelController,
+                  listValues: const [
+                    'Ensino Médio',
+                    'Graduação',
+                    'Pós-Graduação',
+                    'Mestrado',
+                    'Doutorado',
+                    'PhD',
+                    'Outro'
+                  ],
+                ),
+                TitleRadioSelection(text: 'Renda Anual'),
+                RadioSelection(
+                  controller: incomeLevel,
+                  listValues: const [
+                    '< 40K',
+                    '40K - 60K',
+                    '60K - 80K',
+                    '80K - 120K',
+                    '> 120K'
+                  ],
+                ),
                 InputField(
                     text: 'Senha',
                     controller: passwordController,
@@ -117,22 +164,20 @@ class _SignUpPage extends State<SignUpPage> {
                                 genderController.text,
                                 maritalStatusController.text,
                                 educationLevelController.text,
-                                DateTime.parse(birthdateController.text));
+                                DateFormat('dd/MM/yyyy')
+                                    .parse(birthdateController.text));
 
                             Map<String, dynamic> userData =
                                 await UserDAOFirestore.findUser(
                                     userCredential.user!.uid);
 
-                            print(userData);
-
-                            _updateState('User has been registered =)');
+                            _updateState('O usuário foi registrado =)');
 
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (_) => PresentationPage(
                                       userData: userData,
                                     )));
                           } on FirebaseAuthException catch (e) {
-                            print(e.code);
                             if (e.code == 'weak-password') {
                               _updateState('A senha é muito fraca');
                             } else if (e.code == 'email-already-in-use') {
@@ -140,7 +185,6 @@ class _SignUpPage extends State<SignUpPage> {
                                   'Uma conta já existe para este e-mail');
                             } else {
                               _updateState('Erro: Tente novamente');
-                              print(e.code);
                             }
                           }
                         } else {

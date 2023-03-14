@@ -1,9 +1,4 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:mao_de_vakka/app/components/UnderscoreButton.dart';
 import 'package:flutter/material.dart';
-
-import '../dao/UserDAOFirestore.dart';
 import 'HomePage.dart';
 
 class PresentationPage extends StatefulWidget {
@@ -65,7 +60,10 @@ class _PresentationPageState extends State<PresentationPage> {
                             MaterialStateProperty.all(const Size(140, 42)),
                         backgroundColor: MaterialStateProperty.all(
                             const Color.fromARGB(255, 34, 197, 94))),
-                    child: const Text("Próximo"),
+                    child: Icon(
+                      Icons.arrow_right_alt_rounded,
+                      size: 30,
+                    ),
                   ),
                 )),
           ],

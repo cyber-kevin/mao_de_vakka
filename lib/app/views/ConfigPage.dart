@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'dart:core';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
 import 'package:mao_de_vakka/app/views/InitialScreen.dart';
@@ -111,10 +112,14 @@ class _ConfigPage extends State<ConfigPage> {
                     ),
                     initialValue: widget.userData['name'],
                     onChanged: (value) {
-                      setState(() {
-                        UserDAOFirestore.update(widget.userData);
-                        widget.userData['name'] = value;
-                      });
+                      (value.isEmpty || value.characters.length < 2)
+                          ? setState(() {
+                              widget.userData['name'] = widget.userData['name'];
+                            })
+                          : setState(() {
+                              UserDAOFirestore.update(widget.userData);
+                              widget.userData['name'] = value;
+                            });
                     }),
               ),
               SizedBox(

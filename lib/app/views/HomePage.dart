@@ -13,6 +13,7 @@ import 'package:mao_de_vakka/app/components/UnderscoreInputField.dart';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:mao_de_vakka/app/models/Entry.dart';
+import 'package:mao_de_vakka/app/views/ExpensesPage.dart';
 
 import 'ConfigPage.dart';
 
@@ -206,7 +207,11 @@ class _HomePage extends State<HomePage> {
                               const Color.fromARGB(255, 34, 197, 94),
                           width: 300,
                           height: 50,
-                          onPressed: () {})
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) =>
+                                    ExpensesPage(userData: widget.userData)));
+                          })
                     ],
                   )),
               Container(

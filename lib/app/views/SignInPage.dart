@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mao_de_vakka/app/components/DefaultTitle.dart';
 import 'package:mao_de_vakka/app/components/DefaultButton.dart';
 import 'package:mao_de_vakka/app/components/InputField.dart';
+import 'package:mao_de_vakka/app/controllers/direct_to_homepage.dart';
 import 'package:mao_de_vakka/app/models/User.dart' as UserApp;
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -25,7 +26,7 @@ class _SignInPage extends State<SignInPage> {
   UserDAOFirestore dataBase = UserDAOFirestore();
   String _textError = '';
 
-   void _updateState(String message) {
+  void _updateState(String message) {
     setState(() {
       _textError = message;
     });
@@ -60,7 +61,11 @@ class _SignInPage extends State<SignInPage> {
                     InputField(text: 'E-mail:', controller: emailController),
                     InputField(text: 'Senha:', controller: passwordController),
                     Container(
-                      child: Text(_textError, style: TextStyle(color: Colors.red, fontWeight: FontWeight.w600),),
+                      child: Text(
+                        _textError,
+                        style: TextStyle(
+                            color: Colors.red, fontWeight: FontWeight.w600),
+                      ),
                       margin: EdgeInsets.only(top: 10),
                     ),
                     Container(
@@ -93,7 +98,7 @@ class _SignInPage extends State<SignInPage> {
                               if (userCredential != null) {
                                 User? user = userCredential.user;
                                 print(user);
-                                String uid = user!.uid; 
+                                String uid = user!.uid;
 
                                 DocumentSnapshot snapshot =
                                     await FirebaseFirestore.instance
@@ -106,23 +111,24 @@ class _SignInPage extends State<SignInPage> {
                                 print("DATA:");
                                 print(snapshot.data());
 
-                                Map<String, dynamic> userData = await UserDAOFirestore.findUser(uid);
+                                Map<String, dynamic> userData =
+                                    await UserDAOFirestore.findUser(uid);
 
                                 print(userData);
 
                                 Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_) => HomePage(userData: userData)));
-
+                                    builder: (_) => RedirectPage(
+                                          userData: userData,
+                                        )));
                               }
                             } on FirebaseAuthException catch (e) {
                               if (e.code == 'user-not-found') {
                                 _updateState('Este usuário não existe');
-                              }
-                              else if (e.code == 'wrong-password') {
+                              } else if (e.code == 'wrong-password') {
                                 _updateState('A senha está incorreta');
-                              }
-                              else {
-                                _updateState('Erro: Tente novamente mais tarde');
+                              } else {
+                                _updateState(
+                                    'Erro: Tente novamente mais tarde');
                               }
                             }
                           },

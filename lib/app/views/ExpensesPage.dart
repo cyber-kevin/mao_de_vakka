@@ -123,7 +123,7 @@ class _ExpensesPage extends State<ExpensesPage> {
                       fontSize: 16),
                 ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 22.67),
+                  margin: const EdgeInsets.only(bottom: 22.67),
                 ),
                 RadioSelection(
                     controller: entryCategoryController,
@@ -138,25 +138,48 @@ class _ExpensesPage extends State<ExpensesPage> {
                       'Outro'
                     ]),
                 Container(
-                  margin: EdgeInsets.only(bottom: 52.19),
+                  margin: const EdgeInsets.only(bottom: 52.19),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(right: 26.37),
+                      padding: const EdgeInsets.only(right: 26.37),
                       child: DefaultButton(
                           text: 'Adicionar',
                           backgroundColor:
                               const Color.fromARGB(255, 34, 197, 94),
                           onPressed: () {
                             updateEntryData();
+                            showDialog(
+                                context: context,
+                                builder: ((context) => AlertDialog(
+                                      title: const Text(
+                                        'Despesa adicionada',
+                                        style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                            fontSize: 16),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text(
+                                              'OK',
+                                              style: TextStyle(
+                                                  fontFamily: 'Poppins',
+                                                  color: Color.fromARGB(
+                                                      255, 34, 197, 94)),
+                                            ))
+                                      ],
+                                    )));
                           }),
                     )
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 22.13),
+                  margin: const EdgeInsets.only(bottom: 22.13),
                 )
               ],
             ),

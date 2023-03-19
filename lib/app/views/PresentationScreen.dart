@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../controllers/direct_to_homepage.dart';
 import 'HomePage.dart';
 
 class PresentationPage extends StatefulWidget {
@@ -51,7 +52,7 @@ class _PresentationPageState extends State<PresentationPage> {
                       var userData = widget.userData;
 
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => HomePage(
+                          builder: (_) => RedirectPage(
                                 userData: userData,
                               )));
                     },

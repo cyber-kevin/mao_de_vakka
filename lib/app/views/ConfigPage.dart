@@ -20,48 +20,6 @@ class _ConfigPage extends State<ConfigPage> {
     List<Map<String, dynamic>> entrys = [];
 
     return Scaffold(
-      bottomNavigationBar: ClipRRect(
-        borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(60), topRight: Radius.circular(60)),
-        child: BottomAppBar(
-            shape: const CircularNotchedRectangle(),
-            color: const Color.fromARGB(255, 34, 197, 94),
-            child: IconTheme(
-              data:
-                  IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IconButton(
-                        onPressed: () async {
-                          var userData = widget.userData;
-
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => HomePage(
-                                    userData: userData,
-                                  )));
-                        },
-                        icon: const Icon(
-                          Icons.home_rounded,
-                          color: Colors.black,
-                        )),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.attach_money,
-                            color: Colors.black)),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.bar_chart, color: Colors.black)),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.person, color: Colors.white))
-                  ],
-                ),
-              ),
-            )),
-      ),
       body: SingleChildScrollView(
         child: Center(
           child: Column(

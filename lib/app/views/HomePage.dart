@@ -29,8 +29,10 @@ class _HomePage extends State<HomePage> {
   TextEditingController incomeController = TextEditingController();
 
   void updateIncome() {
+    print(incomeController.text);
     double income =
         double.parse(incomeController.text.replaceFirst(RegExp(','), '.'));
+    print(income);
     Entry entry = Entry(income);
     setState(() {
       widget.userData['income'] = widget.userData['income'] + income;
@@ -56,50 +58,6 @@ class _HomePage extends State<HomePage> {
         .forEach((e) => {entrys.add(e)});
 
     return Scaffold(
-      bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(60), topRight: Radius.circular(60)),
-        child: BottomAppBar(
-            shape: const CircularNotchedRectangle(),
-            color: const Color.fromARGB(255, 34, 197, 94),
-            child: IconTheme(
-              data:
-                  IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.home_rounded,
-                          color: Colors.white,
-                        )),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.attach_money),
-                        color: Colors.black),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.bar_chart),
-                        color: Colors.black),
-                    IconButton(
-                        onPressed: () async {
-                          var userData = widget.userData;
-
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => ConfigPage(
-                                    userData: userData,
-                                  )));
-                        },
-                        icon: const Icon(Icons.person),
-                        color: Colors.black)
-                  ],
-                ),
-              ),
-            )),
-      ),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -109,7 +67,7 @@ class _HomePage extends State<HomePage> {
                     'Olá, ${widget.userData['name'].toString().split(" ")[0]}',
               ),
               Container(
-                margin: const EdgeInsets.only(top: 30),
+                margin: const EdgeInsets.only(top: 10),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -200,23 +158,8 @@ class _HomePage extends State<HomePage> {
                       Container(
                         margin: EdgeInsets.only(top: 60),
                       ),
-                      DefaultButton(
-                          alignment: MainAxisAlignment.start,
-                          text: 'Adicionar nova despesa',
-                          backgroundColor:
-                              const Color.fromARGB(255, 34, 197, 94),
-                          width: 300,
-                          height: 50,
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_) =>
-                                    ExpensesPage(userData: widget.userData)));
-                          })
                     ],
                   )),
-              Container(
-                margin: EdgeInsets.only(top: 50),
-              ),
               const Text(
                 'Disponível para gastar',
                 style: TextStyle(
@@ -263,7 +206,7 @@ class _HomePage extends State<HomePage> {
                   )),
               Container(
                 margin: EdgeInsets.only(bottom: 30),
-              )
+              ),
             ],
           ),
         ),

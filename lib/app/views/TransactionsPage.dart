@@ -14,8 +14,9 @@ class _TransactionsPage extends State<TransactionsPage> {
   int currentYear = DateTime.now().year;
   int currentMonth = DateTime.now().month;
 
-  dynamic getDate(DateTime date) {
-    return DateFormat('dd/MM').format(date);
+  dynamic getDate(Timestamp date) {
+    DateFormat format = DateFormat('dd/MM');
+    return format.format(date.toDate());
   }
 
   bool isCredit(String title) {

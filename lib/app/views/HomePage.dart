@@ -6,6 +6,7 @@ import 'package:mao_de_vakka/app/components/DefaultButton.dart';
 import 'package:mao_de_vakka/app/components/DefaultTitle.dart';
 import 'package:mao_de_vakka/app/components/PieChart.dart';
 import 'package:mao_de_vakka/app/components/TransparentButton.dart';
+import 'package:mao_de_vakka/app/models/Category.dart';
 import 'package:mao_de_vakka/app/models/Month.dart';
 import 'dart:core';
 import 'package:intl/intl.dart' as intl;
@@ -20,6 +21,7 @@ import 'ConfigPage.dart';
 class HomePage extends StatefulWidget {
   final Map<String, dynamic> userData;
   const HomePage({super.key, this.userData = const {}});
+  @override
   State<HomePage> createState() => _HomePage();
 }
 
@@ -29,10 +31,8 @@ class _HomePage extends State<HomePage> {
   TextEditingController incomeController = TextEditingController();
 
   void updateIncome() {
-    print(incomeController.text);
     double income =
         double.parse(incomeController.text.replaceFirst(RegExp(','), '.'));
-    print(income);
     Entry entry = Entry(income);
     setState(() {
       widget.userData['income'] = widget.userData['income'] + income;
@@ -51,12 +51,57 @@ class _HomePage extends State<HomePage> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
+  bool hasCategory(String category, List<Map<String, dynamic>> map) {
+    final filteredList = map.where((e) => e['category'] == category);
+    return filteredList.isNotEmpty;
+  }
+
+  List<Map<String, dynamic>> getOnlyExpensesEntrys() {
     List<Map<String, dynamic>> entrys = [];
     widget.userData['entryList']['$currentYear']['$currentMonth']
-        .forEach((e) => {entrys.add(e)});
+        .forEach((e) => {
+              if (e['category'] != 'Saldo') {entrys.add(e)}
+            });
 
+    return entrys;
+  }
+
+  List<Map<String, dynamic>> getTotalValuesPerCategory() {
+    List<Map<String, dynamic>> entrys = getOnlyExpensesEntrys();
+    List<Map<String, dynamic>> totalValuesPerCategory = [];
+
+    for (int i = 0; i < entrys.length; i++) {
+      if (!hasCategory(entrys[i]['category'], totalValuesPerCategory)) {
+        totalValuesPerCategory.add(
+            {'category': entrys[i]['category'], 'value': entrys[i]['value']});
+      } else {
+        int targetIndex = totalValuesPerCategory
+            .indexWhere((e) => e['category'] == entrys[i]['category']);
+
+        if (targetIndex != -1) {
+          totalValuesPerCategory[targetIndex]['value'] += entrys[i]['value'];
+        }
+      }
+    }
+
+    return totalValuesPerCategory;
+  }
+
+  double getSumOfAllExpenses() {
+    List<Map<String, dynamic>> totalValuesPerCategory =
+        getTotalValuesPerCategory();
+
+    double sum = 0;
+
+    for (int i = 0; i < totalValuesPerCategory.length; i++) {
+      sum += totalValuesPerCategory[i]['value'];
+    }
+
+    return sum;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(
@@ -77,8 +122,6 @@ class _HomePage extends State<HomePage> {
                     color: Colors.black,
                     onPressed: () {
                       switchMonth(DateTime.now().month - 1);
-                      print('switched');
-                      print(entrys);
                     },
                   ),
                   TransparentButton(
@@ -86,8 +129,6 @@ class _HomePage extends State<HomePage> {
                     color: Colors.black,
                     onPressed: () {
                       switchMonth(DateTime.now().month);
-                      print('switched');
-                      print(entrys);
                     },
                   ),
                   TransparentButton(
@@ -95,8 +136,6 @@ class _HomePage extends State<HomePage> {
                     color: Colors.black,
                     onPressed: () {
                       switchMonth(DateTime.now().month + 1);
-                      print('switched');
-                      print(entrys);
                     },
                   )
                 ],
@@ -121,22 +160,80 @@ class _HomePage extends State<HomePage> {
                     fontWeight: FontWeight.w600,
                     fontSize: 36),
               ),
-              AspectRatio(
-                aspectRatio: 16 / 9,
-                child: DChartPie(
-                  data: const [
-                    {'domain': 'Flutter', 'measure': 28},
-                    {'domain': 'React Native', 'measure': 27},
-                    {'domain': 'Ionic', 'measure': 20},
-                    {'domain': 'Cordova', 'measure': 15},
-                  ],
-                  fillColor: (pieData, index) => Colors.purple,
-                  donutWidth: 30,
-                  labelColor: Colors.white,
+              Container(
+                margin: const EdgeInsets.only(top: 30),
+              ),
+              if (getOnlyExpensesEntrys().isNotEmpty)
+                AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: DChartPie(
+                    data: getTotalValuesPerCategory()
+                        .map((e) {
+                          if (e['category'] != 'Saldo') {
+                            return {
+                              'domain': e['category'],
+                              'measure':
+                                  ((e['value'] / getSumOfAllExpenses()) * 100)
+                                      .round()
+                            };
+                          } else {
+                            return null;
+                          }
+                        })
+                        .whereType<Map<String, dynamic>>()
+                        .toList(),
+                    fillColor: (pieData, index) {
+                      switch (pieData['domain']) {
+                        case 'Beleza':
+                          return const Color.fromARGB(255, 0, 180, 216);
+                        case 'Alimentacao':
+                          return const Color.fromARGB(255, 144, 224, 239);
+                        case 'Lazer':
+                          return const Color.fromARGB(255, 67, 90, 236);
+                        case 'Transporte':
+                          return const Color.fromARGB(255, 202, 240, 248);
+                        case 'CartaoDeCredito':
+                          return const Color.fromARGB(255, 2, 62, 138);
+                        case 'Contas':
+                          return const Color.fromARGB(255, 3, 4, 94);
+                        case 'Casa':
+                          return const Color.fromARGB(255, 0, 119, 182);
+                        case 'Outro':
+                          return const Color.fromARGB(255, 106, 104, 104);
+                        default:
+                          return const Color.fromARGB(255, 0, 180, 216);
+                      }
+                    },
+                    donutWidth: 15,
+                    labelPosition: PieLabelPosition.auto,
+                    labelColor: Colors.black,
+                    labelFontSize: 12,
+                    labelLineColor: const Color.fromARGB(255, 34, 197, 94),
+                    labelLinelength: 20,
+                    labelLineThickness: 2,
+                    showLabelLine: false,
+                    pieLabel: (pieData, index) {
+                      return '';
+                    },
+                    strokeWidth: 3,
+                  ),
+                )
+              else
+                Container(
+                  margin: const EdgeInsets.only(top: 80, bottom: 80),
+                  child: const Text(
+                    'Você ainda não teve despesas neste mês',
+                    style: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: Color.fromARGB(255, 20, 219, 139),
+                        fontWeight: FontWeight.w600),
+                  ),
                 ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 30),
               ),
               Padding(
-                  padding: EdgeInsets.only(left: 45),
+                  padding: const EdgeInsets.only(left: 45),
                   child: Column(
                     children: [
                       Row(
@@ -156,7 +253,7 @@ class _HomePage extends State<HomePage> {
                         onPressed: updateIncome,
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 60),
+                        margin: const EdgeInsets.only(top: 60),
                       ),
                     ],
                   )),
@@ -205,7 +302,7 @@ class _HomePage extends State<HomePage> {
                     ],
                   )),
               Container(
-                margin: EdgeInsets.only(bottom: 30),
+                margin: const EdgeInsets.only(bottom: 30),
               ),
             ],
           ),

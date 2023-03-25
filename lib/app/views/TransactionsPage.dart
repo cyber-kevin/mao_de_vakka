@@ -20,7 +20,7 @@ class _TransactionsPage extends State<TransactionsPage> {
   }
 
   bool isCredit(String title) {
-    return title == 'Crédito';
+    return title == 'CrÃ©dito';
   }
 
   @override
@@ -55,24 +55,18 @@ class _TransactionsPage extends State<TransactionsPage> {
                       Column(
                         children: [
                           Container(
-                              margin: EdgeInsets.only(bottom: 6),
+                              margin: const EdgeInsets.only(bottom: 6),
                               child: Text(
                                 widget.userData['entryList']['$currentYear']
                                     ['$currentMonth'][index]['title'],
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w600),
                               )),
                           Container(
-                              margin: EdgeInsets.only(bottom: 2),
+                              margin: const EdgeInsets.only(bottom: 2),
                               child: Text(
-                                "R\$ " +
-                                    NumberFormat("###.00", "en_US")
-                                        .format(widget.userData['entryList']
-                                                ['$currentYear']
-                                            ['$currentMonth'][index]['value'])
-                                        .toString()
-                                        .replaceAll('.', ','),
+                                "R\$ ${NumberFormat("##0.00", "en_US").format(widget.userData['entryList']['$currentYear']['$currentMonth'][index]['value']).toString().replaceAll('.', ',')}",
                                 style: TextStyle(
                                     color: isCredit(widget.userData['entryList']
                                                 ['$currentYear']
@@ -87,7 +81,7 @@ class _TransactionsPage extends State<TransactionsPage> {
                       Text(
                         getDate(widget.userData['entryList']['$currentYear']
                             ['$currentMonth'][index]['date']),
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w600),
                       )

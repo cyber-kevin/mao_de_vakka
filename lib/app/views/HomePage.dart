@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:d_chart/d_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mao_de_vakka/app/components/DefaultButton.dart';
 import 'package:mao_de_vakka/app/components/DefaultTitle.dart';
 import 'package:mao_de_vakka/app/components/PieChart.dart';
@@ -15,8 +16,9 @@ import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:mao_de_vakka/app/models/Entry.dart';
 import 'package:mao_de_vakka/app/views/ExpensesPage.dart';
-
+import '../components/LegendItem.dart';
 import 'ConfigPage.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class HomePage extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -100,6 +102,20 @@ class _HomePage extends State<HomePage> {
     return sum;
   }
 
+  int getPercentagePerCategory(String category) {
+    List<Map<String, dynamic>> totalValuesPerCategory =
+        getTotalValuesPerCategory();
+
+    double sum = getSumOfAllExpenses();
+
+    var list =
+        totalValuesPerCategory.where((e) => e['category'] == category).toList();
+
+    int result = list.isEmpty ? 0 : ((list[0]['value'] / sum) * 100).round();
+
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,60 +180,159 @@ class _HomePage extends State<HomePage> {
                 margin: const EdgeInsets.only(top: 30),
               ),
               if (getOnlyExpensesEntrys().isNotEmpty)
-                AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: DChartPie(
-                    data: getTotalValuesPerCategory()
-                        .map((e) {
-                          if (e['category'] != 'Saldo') {
-                            return {
-                              'domain': e['category'],
-                              'measure':
-                                  ((e['value'] / getSumOfAllExpenses()) * 100)
-                                      .round()
-                            };
-                          } else {
-                            return null;
-                          }
-                        })
-                        .whereType<Map<String, dynamic>>()
-                        .toList(),
-                    fillColor: (pieData, index) {
-                      switch (pieData['domain']) {
-                        case 'Beleza':
-                          return const Color.fromARGB(255, 0, 180, 216);
-                        case 'Alimentacao':
-                          return const Color.fromARGB(255, 144, 224, 239);
-                        case 'Lazer':
-                          return const Color.fromARGB(255, 67, 90, 236);
-                        case 'Transporte':
-                          return const Color.fromARGB(255, 202, 240, 248);
-                        case 'CartaoDeCredito':
-                          return const Color.fromARGB(255, 2, 62, 138);
-                        case 'Contas':
-                          return const Color.fromARGB(255, 3, 4, 94);
-                        case 'Casa':
-                          return const Color.fromARGB(255, 0, 119, 182);
-                        case 'Outro':
-                          return const Color.fromARGB(255, 106, 104, 104);
-                        default:
-                          return const Color.fromARGB(255, 0, 180, 216);
-                      }
-                    },
-                    donutWidth: 15,
-                    labelPosition: PieLabelPosition.auto,
-                    labelColor: Colors.black,
-                    labelFontSize: 12,
-                    labelLineColor: const Color.fromARGB(255, 34, 197, 94),
-                    labelLinelength: 20,
-                    labelLineThickness: 2,
-                    showLabelLine: false,
-                    pieLabel: (pieData, index) {
-                      return '';
-                    },
-                    strokeWidth: 3,
+                Column(children: [
+                  AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: DChartPie(
+                      data: getTotalValuesPerCategory()
+                          .map((e) {
+                            if (e['category'] != 'Saldo') {
+                              return {
+                                'domain': e['category'],
+                                'measure':
+                                    ((e['value'] / getSumOfAllExpenses()) * 100)
+                                        .round()
+                              };
+                            } else {
+                              return null;
+                            }
+                          })
+                          .whereType<Map<String, dynamic>>()
+                          .toList(),
+                      fillColor: (pieData, index) {
+                        switch (pieData['domain']) {
+                          case 'Beleza':
+                            return const Color.fromARGB(255, 0, 180, 216);
+                          case 'Alimentacao':
+                            return const Color.fromARGB(255, 144, 224, 239);
+                          case 'Lazer':
+                            return const Color.fromARGB(255, 67, 90, 236);
+                          case 'Transporte':
+                            return const Color.fromARGB(255, 202, 240, 248);
+                          case 'CartaoDeCredito':
+                            return const Color.fromARGB(255, 2, 62, 138);
+                          case 'Contas':
+                            return const Color.fromARGB(255, 3, 4, 94);
+                          case 'Casa':
+                            return const Color.fromARGB(255, 0, 119, 182);
+                          case 'Outro':
+                            return const Color.fromARGB(255, 106, 104, 104);
+                          default:
+                            return const Color.fromARGB(255, 0, 180, 216);
+                        }
+                      },
+                      donutWidth: 15,
+                      labelPosition: PieLabelPosition.auto,
+                      labelColor: Colors.black,
+                      labelFontSize: 12,
+                      labelLineColor: const Color.fromARGB(255, 34, 197, 94),
+                      labelLinelength: 20,
+                      labelLineThickness: 2,
+                      showLabelLine: false,
+                      pieLabel: (pieData, index) {
+                        return '';
+                      },
+                      strokeWidth: 3,
+                    ),
                   ),
-                )
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          if (getPercentagePerCategory('Alimentacao') != 0)
+                            LegendItem(
+                              color: const Color.fromARGB(255, 144, 224, 239),
+                              text: 'Alimentação',
+                              percentage:
+                                  getPercentagePerCategory('Alimentacao'),
+                            ),
+                          if (getPercentagePerCategory('Beleza') != 0)
+                            LegendItem(
+                                color: const Color.fromARGB(255, 0, 180, 216),
+                                text: 'Beleza',
+                                percentage: getPercentagePerCategory('Beleza')),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          if (getPercentagePerCategory('Transporte') != 0)
+                            LegendItem(
+                              color: const Color.fromARGB(255, 202, 240, 248),
+                              text: 'Transporte',
+                              percentage:
+                                  getPercentagePerCategory('Transporte'),
+                            ),
+                          if (getPercentagePerCategory('CartaoDeCredito') != 0)
+                            LegendItem(
+                              color: const Color.fromARGB(255, 2, 62, 138),
+                              text: 'Cartão de Crédito',
+                              percentage:
+                                  getPercentagePerCategory('CartaoDeCredito'),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          if (getPercentagePerCategory('Lazer') != 0)
+                            LegendItem(
+                              color: const Color.fromARGB(255, 67, 90, 236),
+                              text: 'Lazer',
+                              percentage: getPercentagePerCategory('Lazer'),
+                            ),
+                          if (getPercentagePerCategory('Casa') != 0)
+                            LegendItem(
+                              color: const Color.fromARGB(255, 0, 119, 182),
+                              text: 'Casa',
+                              percentage: getPercentagePerCategory('Casa'),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          if (getPercentagePerCategory('Contas') != 0)
+                            LegendItem(
+                              color: const Color.fromARGB(255, 3, 4, 94),
+                              text: 'Contas',
+                              percentage: getPercentagePerCategory('Contas'),
+                            ),
+                          if (getPercentagePerCategory('Outro') != 0)
+                            LegendItem(
+                              color: const Color.fromARGB(255, 106, 104, 104),
+                              text: 'Outro',
+                              percentage: getPercentagePerCategory('Outro'),
+                            ),
+                        ],
+                      )
+                    ],
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 25),
+                    child: Text(
+                      'Total gasto: R\$ ${NumberFormat("##0.00", "en_US").format(getSumOfAllExpenses())}',
+                      style: const TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16),
+                    ),
+                  )
+                ])
               else
                 Container(
                   margin: const EdgeInsets.only(top: 80, bottom: 80),
@@ -238,7 +353,7 @@ class _HomePage extends State<HomePage> {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
                             'Adicionar receita',
                             style: TextStyle(
@@ -253,7 +368,7 @@ class _HomePage extends State<HomePage> {
                         onPressed: updateIncome,
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 60),
+                        margin: EdgeInsets.only(top: 60),
                       ),
                     ],
                   )),
@@ -269,7 +384,7 @@ class _HomePage extends State<HomePage> {
                   child: Row(
                     children: [
                       Column(
-                        children: const [
+                        children: [
                           Text(
                             'R\$ 15,00/',
                             style: TextStyle(
@@ -285,7 +400,7 @@ class _HomePage extends State<HomePage> {
                       ),
                       Spacer(),
                       Column(
-                        children: const [
+                        children: [
                           Text(
                             'R\$ 105,00/',
                             style: TextStyle(

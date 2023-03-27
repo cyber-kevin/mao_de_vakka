@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../models/Category.dart';
+
 class TransactionsPage extends StatefulWidget {
   final Map<String, dynamic> userData;
 
@@ -19,8 +21,8 @@ class _TransactionsPage extends State<TransactionsPage> {
     return format.format(date.toDate());
   }
 
-  bool isCredit(String title) {
-    return title == 'CrÃ©dito';
+  bool isCredit(String category) {
+    return category == 'Saldo';
   }
 
   @override
@@ -40,8 +42,9 @@ class _TransactionsPage extends State<TransactionsPage> {
                   borderRadius: BorderRadius.circular(10),
                   side: BorderSide(
                     color: isCredit(widget.userData['entryList']
-                                [DateTime.now().year.toString()]
-                            [DateTime.now().month.toString()][index]['title'])
+                                    [DateTime.now().year.toString()]
+                                [DateTime.now().month.toString()][index]
+                            ['category'])
                         ? Colors.green
                         : Colors.red, // Set border color
                     width: 1.0, // Set border width
@@ -69,8 +72,9 @@ class _TransactionsPage extends State<TransactionsPage> {
                                 "R\$ ${NumberFormat("##0.00", "en_US").format(widget.userData['entryList']['$currentYear']['$currentMonth'][index]['value']).toString().replaceAll('.', ',')}",
                                 style: TextStyle(
                                     color: isCredit(widget.userData['entryList']
-                                                ['$currentYear']
-                                            ['$currentMonth'][index]['title'])
+                                                    ['$currentYear']
+                                                ['$currentMonth'][index]
+                                            ['category'])
                                         ? Colors.green
                                         : Colors.red,
                                     fontFamily: 'Montserrat',

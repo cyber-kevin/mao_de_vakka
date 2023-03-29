@@ -5,9 +5,19 @@ import 'package:mao_de_vakka/app/views/HomePage.dart';
 class UnderscoreInputField extends StatelessWidget {
   final TextEditingController controller;
   final Function() onPressed;
+  final double width;
+  final bool leftIcon;
+  final bool rightIcon;
+  final double height;
 
   UnderscoreInputField(
-      {super.key, required this.controller, required this.onPressed});
+      {super.key,
+      required this.controller,
+      required this.onPressed,
+      required this.width,
+      this.height = 40,
+      this.leftIcon = false,
+      this.rightIcon = false});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +27,8 @@ class UnderscoreInputField extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-                width: 300,
-                height: 50,
+                width: width,
+                height: height,
                 child: TextFormField(
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   inputFormatters: [
@@ -32,18 +42,22 @@ class UnderscoreInputField extends StatelessWidget {
                   ],
                   controller: controller,
                   decoration: InputDecoration(
-                    prefixIcon: const Icon(
-                      Icons.attach_money,
-                      color: Colors.black,
-                    ),
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.add_circle_outline,
-                          color: Colors.black),
-                      onPressed: () {
-                        onPressed();
-                      },
-                      alignment: Alignment.bottomLeft,
-                    ),
+                    prefixIcon: leftIcon == true
+                        ? const Icon(
+                            Icons.attach_money,
+                            color: Colors.black,
+                          )
+                        : null,
+                    suffixIcon: rightIcon == true
+                        ? IconButton(
+                            icon: const Icon(Icons.add_circle_outline,
+                                color: Colors.black),
+                            onPressed: () {
+                              onPressed();
+                            },
+                            alignment: Alignment.bottomLeft,
+                          )
+                        : null,
                     focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                       width: 2.5,

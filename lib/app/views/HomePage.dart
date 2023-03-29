@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mao_de_vakka/app/components/DefaultButton.dart';
 import 'package:mao_de_vakka/app/components/DefaultTitle.dart';
+import 'package:mao_de_vakka/app/components/EditableTextWidget.dart';
+import 'package:mao_de_vakka/app/components/InputField.dart';
+import 'package:mao_de_vakka/app/components/NumericInputField.dart';
 import 'package:mao_de_vakka/app/components/PieChart.dart';
 import 'package:mao_de_vakka/app/components/TransparentButton.dart';
 import 'package:mao_de_vakka/app/models/Category.dart';
@@ -18,7 +21,6 @@ import 'package:mao_de_vakka/app/models/Entry.dart';
 import 'package:mao_de_vakka/app/views/ExpensesPage.dart';
 import '../components/LegendItem.dart';
 import 'ConfigPage.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 
 class HomePage extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -31,6 +33,7 @@ class _HomePage extends State<HomePage> {
   int currentMonth = DateTime.now().month;
   int currentYear = DateTime.now().year;
   TextEditingController incomeController = TextEditingController();
+  TextEditingController editedIncomeController = TextEditingController();
 
   void updateIncome() {
     double income =
@@ -45,6 +48,15 @@ class _HomePage extends State<HomePage> {
     setState(() {
       incomeController.clear();
     });
+  }
+
+  void editIncome() {
+    double income =
+        double.parse(incomeController.text.replaceFirst(RegExp(','), '.'));
+    setState(() {
+      widget.userData['income'] = income;
+    });
+    UserDAOFirestore.update(widget.userData);
   }
 
   void switchMonth(int month) {
@@ -119,6 +131,7 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -169,12 +182,23 @@ class _HomePage extends State<HomePage> {
               Container(
                 margin: const EdgeInsets.only(top: 5),
               ),
-              Text(
-                "R\$ ${intl.NumberFormat("0.00", "pt_BR").format(widget.userData['income'])}",
-                style: const TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w600,
-                    fontSize: 36),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('R\$',
+                      style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 36)),
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  EditableTextWidget(
+                    initialText: widget.userData['income'].toString(),
+                    controller: editedIncomeController,
+                    userData: widget.userData,
+                  ),
+                ],
               ),
               Container(
                 margin: const EdgeInsets.only(top: 30),
@@ -325,7 +349,7 @@ class _HomePage extends State<HomePage> {
                   Container(
                     margin: const EdgeInsets.only(top: 25),
                     child: Text(
-                      'Total gasto: R\$ ${NumberFormat("##0.00", "en_US").format(getSumOfAllExpenses())}',
+                      'Total gasto: R\$ ${NumberFormat("##0.00", "en_US").format(getSumOfAllExpenses()).replaceAll('.', ',')}',
                       style: const TextStyle(
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w600,
@@ -345,7 +369,7 @@ class _HomePage extends State<HomePage> {
                   ),
                 ),
               Container(
-                margin: const EdgeInsets.only(bottom: 30),
+                margin: const EdgeInsets.only(bottom: 40),
               ),
               Padding(
                   padding: const EdgeInsets.only(left: 45),
@@ -365,55 +389,13 @@ class _HomePage extends State<HomePage> {
                       ),
                       UnderscoreInputField(
                         controller: incomeController,
+                        width: 300,
+                        rightIcon: true,
                         onPressed: updateIncome,
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 60),
+                        margin: const EdgeInsets.only(top: 60),
                       ),
-                    ],
-                  )),
-              const Text(
-                'Disponível para gastar',
-                style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w600,
-                    fontSize: 24),
-              ),
-              Padding(
-                  padding: EdgeInsets.only(left: 57, right: 57, top: 17),
-                  child: Row(
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            'R\$ 15,00/',
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18),
-                          ),
-                          Text(
-                            'por dia',
-                            style: TextStyle(fontFamily: 'Montserrat'),
-                          )
-                        ],
-                      ),
-                      Spacer(),
-                      Column(
-                        children: [
-                          Text(
-                            'R\$ 105,00/',
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18),
-                          ),
-                          Text(
-                            'por semana',
-                            style: TextStyle(fontFamily: 'Montserrat'),
-                          )
-                        ],
-                      )
                     ],
                   )),
               Container(

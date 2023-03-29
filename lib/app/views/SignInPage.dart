@@ -93,11 +93,8 @@ class _SignInPage extends State<SignInPage> {
                                       email: emailController.text,
                                       password: passwordController.text);
 
-                              print(userCredential);
-
                               if (userCredential != null) {
                                 User? user = userCredential.user;
-                                print(user);
                                 String uid = user!.uid;
 
                                 DocumentSnapshot snapshot =
@@ -106,15 +103,8 @@ class _SignInPage extends State<SignInPage> {
                                         .doc(user.uid)
                                         .get();
 
-                                print(snapshot);
-
-                                print("DATA:");
-                                print(snapshot.data());
-
                                 Map<String, dynamic> userData =
                                     await UserDAOFirestore.findUser(uid);
-
-                                print(userData);
 
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (_) => RedirectPage(

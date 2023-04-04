@@ -80,38 +80,6 @@ class _ConfigPage extends State<ConfigPage> {
                             });
                     }),
               ),
-              SizedBox(
-                height: 80,
-                width: 360,
-                child: TextFormField(
-                    style: const TextStyle(
-                        color: Color.fromARGB(255, 34, 197, 94),
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500),
-                    decoration: const InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(255, 34, 197, 94),
-                              width: 1.5)),
-                      suffixIcon: Icon(Icons.edit, color: Colors.black),
-                      contentPadding: EdgeInsets.only(top: 10),
-                      labelText: 'Email',
-                      labelStyle: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18.0,
-                          fontFamily: 'Poppins'),
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(255, 34, 197, 94),
-                              width: 1)),
-                    ),
-                    initialValue: widget.userData['email'],
-                    onChanged: (value) {
-                      setState(() {
-                        widget.userData['email'] = value;
-                      });
-                    }),
-              ),
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
@@ -146,12 +114,31 @@ class _ConfigPage extends State<ConfigPage> {
                               color: Color.fromARGB(255, 34, 197, 94),
                               width: 3),
                           borderRadius: BorderRadius.circular(10))),
-                  onPressed: () async {
-                    await FirebaseAuth.instance.signOut();
+                  onPressed: () => showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                            title: const Text("Excluir conta"),
+                            content: const Text(
+                                "Tem certeza que deseja sair do aplicativo?"),
+                            actions: [
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(context, "Cancelar"),
+                                child: const Text("Cancelar"),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  await FirebaseAuth.instance.signOut();
 
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (_) => const InitialScreen()));
-                  },
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (_) =>
+                                              const InitialScreen()));
+                                },
+                                child: const Text("Sair"),
+                              ),
+                            ],
+                          )),
                   icon: const Icon(
                     Icons.logout,
                     color: Color.fromARGB(255, 34, 197, 94),

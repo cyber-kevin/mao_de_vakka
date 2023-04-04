@@ -56,29 +56,32 @@ class _RedirectPage extends State<RedirectPage> {
           ],
         ),
         bottomNavigationBar: ClipRRect(
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(60), topRight: Radius.circular(60)),
-            child: BottomNavigationBar(
-              selectedItemColor: Colors.white,
-              unselectedItemColor: Colors.black,
-              currentIndex: paginaAtual,
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: const Color.fromARGB(255, 34, 197, 94),
-              items: const [
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.home_rounded), label: ''),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.attach_money), label: ''),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.add_circle_outline), label: ''),
-                BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: ''),
-                BottomNavigationBarItem(icon: Icon(Icons.person), label: '')
-              ],
-              onTap: (page) {
-                pc.animateToPage(page,
-                    duration: const Duration(milliseconds: 400),
-                    curve: Curves.ease);
-              },
-            )));
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(50), topRight: Radius.circular(50)),
+          child: BottomNavigationBar(
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.black,
+            currentIndex: paginaAtual,
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: const Color.fromARGB(255, 34, 197, 94),
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            items: const [
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.home_rounded), label: ''),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.attach_money), label: ''),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.add_circle_outline), label: ''),
+              BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: ''),
+              BottomNavigationBarItem(icon: Icon(Icons.person), label: '')
+            ],
+            onTap: (page) {
+              pc.animateToPage(page,
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.ease);
+            },
+          ),
+        ));
   }
 }

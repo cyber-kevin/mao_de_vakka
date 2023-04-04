@@ -9,12 +9,12 @@ import 'package:mao_de_vakka/app/components/editable_text_widget.dart';
 import 'package:mao_de_vakka/app/components/input_field.dart';
 import 'package:mao_de_vakka/app/components/numeric_input_field.dart';
 import 'package:mao_de_vakka/app/components/PieChart.dart';
-import 'package:mao_de_vakka/app/components/TransparentButton.dart';
+import 'package:mao_de_vakka/app/components/transparent_button.dart';
 import 'package:mao_de_vakka/app/models/Category.dart';
 import 'package:mao_de_vakka/app/models/Month.dart';
 import 'dart:core';
 import 'package:intl/intl.dart' as intl;
-import 'package:mao_de_vakka/app/components/UnderscoreInputField.dart';
+import 'package:mao_de_vakka/app/components/underscore_input_field.dart';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:mao_de_vakka/app/models/entry.dart';
@@ -33,6 +33,8 @@ class _HomePage extends State<HomePage> {
   int currentYear = DateTime.now().year;
   TextEditingController incomeController = TextEditingController();
   TextEditingController editedIncomeController = TextEditingController();
+  final _focusValue = FocusNode();
+  int selected = 2;
 
   void updateIncome() {
     var categorys = Category.values.map((e) => e.toString()).toList();
@@ -154,22 +156,37 @@ class _HomePage extends State<HomePage> {
                   TransparentButton(
                     text: Month.getMonth(DateTime.now().month - 1),
                     color: Colors.black,
+                    fontSize: selected == 1 ? 20 : 17,
+                    shouldShowBorder: selected == 1 ? true : false,
                     onPressed: () {
                       switchMonth(DateTime.now().month - 1);
+                      setState(() {
+                        selected = 1;
+                      });
                     },
                   ),
                   TransparentButton(
                     text: Month.getMonth(DateTime.now().month),
                     color: Colors.black,
+                    fontSize: selected == 2 ? 20 : 17,
+                    shouldShowBorder: selected == 2 ? true : false,
                     onPressed: () {
                       switchMonth(DateTime.now().month);
+                      setState(() {
+                        selected = 2;
+                      });
                     },
                   ),
                   TransparentButton(
                     text: Month.getMonth(DateTime.now().month + 1),
                     color: Colors.black,
+                    fontSize: selected == 3 ? 20 : 17,
+                    shouldShowBorder: selected == 3 ? true : false,
                     onPressed: () {
                       switchMonth(DateTime.now().month + 1);
+                      setState(() {
+                        selected = 3;
+                      });
                     },
                   )
                 ],
@@ -376,11 +393,11 @@ class _HomePage extends State<HomePage> {
               Container(
                 margin: const EdgeInsets.only(bottom: 40),
               ),
-              Padding(
-                  padding: const EdgeInsets.only(left: 45),
-                  child: Column(
-                    children: [
-                      Row(
+              Column(
+                children: [
+                  Padding(
+                      padding: EdgeInsets.only(left: 45),
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
@@ -391,18 +408,51 @@ class _HomePage extends State<HomePage> {
                                 fontSize: 16),
                           ),
                         ],
-                      ),
-                      UnderscoreInputField(
-                        controller: incomeController,
-                        width: 300,
-                        rightIcon: true,
-                        onPressed: updateIncome,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 60),
-                      ),
-                    ],
-                  )),
+                      )),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                  ),
+                  Center(
+                      child: Container(
+                          width: 300,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Focus(
+                                  focusNode: _focusValue,
+                                  child: UnderscoreInputField(
+                                    controller: incomeController,
+                                    width: 220,
+                                    rightIcon: true,
+                                  )),
+                              Container(
+                                width: 60,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    updateIncome();
+                                    _focusValue.unfocus();
+                                  },
+                                  child: Text('✔'),
+                                  style: ButtonStyle(
+                                      shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      )),
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              const Color.fromARGB(
+                                                  255, 34, 197, 94))),
+                                ),
+                              )
+                            ],
+                          ))),
+                  Container(
+                    margin: const EdgeInsets.only(top: 60),
+                  ),
+                ],
+              ),
               Container(
                   margin: const EdgeInsets.only(bottom: 30),
                   child: DefaultButton(
@@ -410,7 +460,7 @@ class _HomePage extends State<HomePage> {
                       width: 300,
                       height: 50,
                       alignment: MainAxisAlignment.center,
-                      backgroundColor: Color.fromARGB(255, 20, 219, 139),
+                      backgroundColor: const Color.fromARGB(255, 34, 197, 94),
                       onPressed: () => showDialog(
                           context: context,
                           builder: (BuildContext context) => AlertDialog(

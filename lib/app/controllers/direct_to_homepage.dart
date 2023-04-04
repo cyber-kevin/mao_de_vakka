@@ -46,7 +46,9 @@ class _RedirectPage extends State<RedirectPage> {
             ExpensesPage(
               userData: widget.userData,
             ),
-            CategoryDetails(),
+            CategoryDetails(
+              userData: widget.userData,
+            ),
             ConfigPage(
               userData: widget.userData,
             )

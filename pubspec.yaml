@@ -46,6 +46,7 @@ dependencies:
   charts_flutter: ^0.12.0
   date_field: ^3.0.0
   intl: ^0.17.0
+  dropdown_button2: ^2.0.0
 
 dev_dependencies:
   flutter_test:

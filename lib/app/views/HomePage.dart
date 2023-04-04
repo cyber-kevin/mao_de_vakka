@@ -36,6 +36,10 @@ class _HomePage extends State<HomePage> {
   TextEditingController editedIncomeController = TextEditingController();
 
   void updateIncome() {
+    var categorys = Category.values.map((e) => e.toString()).toList();
+
+    print(categorys);
+
     double income =
         double.parse(incomeController.text.replaceFirst(RegExp(','), '.'));
     Entry entry = Entry(income);
@@ -375,7 +379,7 @@ class _HomePage extends State<HomePage> {
                   padding: const EdgeInsets.only(left: 45),
                   child: Column(
                     children: [
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(

@@ -6,6 +6,9 @@ import 'package:mao_de_vakka/app/components/DefaultButton.dart';
 import 'package:mao_de_vakka/app/models/Category.dart';
 import 'package:mao_de_vakka/app/models/Entry.dart';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
+import 'package:mao_de_vakka/app/views/HomePage.dart';
+
+import '../controllers/direct_to_homepage.dart';
 
 class ExpensesPage extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -25,7 +28,7 @@ class _ExpensesPage extends State<ExpensesPage> {
 
     switch (value) {
       case 'Cartão de Crédito':
-        category = Category.CartaoDeCredito;
+        category = Category.Cartao;
         break;
 
       case 'Saúde':
@@ -76,8 +79,10 @@ class _ExpensesPage extends State<ExpensesPage> {
   void updateEntryData() {
     double value =
         double.parse(entryValueController.text.replaceFirst(RegExp(','), '.'));
+
     Entry entry = Entry.expense(entryNameController.text, value,
         _createCategoryEnum(entryCategoryController.text));
+
     setState(() {
       widget.userData['income'] = widget.userData['income'] - value;
       widget.userData['entryList']['$currentYear']['$currentMonth']
@@ -164,6 +169,13 @@ class _ExpensesPage extends State<ExpensesPage> {
                                         TextButton(
                                             onPressed: () {
                                               Navigator.pop(context);
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (_) =>
+                                                          RedirectPage(
+                                                            userData:
+                                                                widget.userData,
+                                                          )));
                                             },
                                             child: const Text(
                                               'OK',

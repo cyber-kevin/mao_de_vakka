@@ -2,7 +2,7 @@ enum Category {
   Saude,
   Alimentacao,
   Transporte,
-  CartaoDeCredito,
+  Cartao,
   Contas,
   Lazer,
   Beleza,

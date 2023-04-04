@@ -1,12 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:mao_de_vakka/app/components/date_input_field.dart';
 import 'package:mao_de_vakka/app/components/input_field.dart';
 import 'package:mao_de_vakka/app/components/numeric_input_field.dart';
 import 'package:mao_de_vakka/app/components/RadioSelection.dart';
 import 'package:mao_de_vakka/app/components/default_button.dart';
 import 'package:mao_de_vakka/app/models/Category.dart';
-import 'package:mao_de_vakka/app/models/Entry.dart';
+import 'package:mao_de_vakka/app/models/entry.dart';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
-import 'package:mao_de_vakka/app/views/HomePage.dart';
+import 'package:mao_de_vakka/app/views/homepage.dart';
 
 import '../controllers/direct_to_homepage.dart';
 
@@ -22,8 +25,9 @@ class _ExpensesPage extends State<ExpensesPage> {
   TextEditingController entryNameController = TextEditingController();
   TextEditingController entryValueController = TextEditingController();
   TextEditingController entryCategoryController = TextEditingController();
+  TextEditingController entryDate = TextEditingController();
 
-  Category _createCategoryEnum(value) {
+  Category _getCategoryEnum(value) {
     Category category;
 
     switch (value) {
@@ -80,12 +84,19 @@ class _ExpensesPage extends State<ExpensesPage> {
     double value =
         double.parse(entryValueController.text.replaceFirst(RegExp(','), '.'));
 
-    Entry entry = Entry.expense(entryNameController.text, value,
-        _createCategoryEnum(entryCategoryController.text));
+    List<String> parts = entryDate.text.split('/');
+    String formattedDate = '${parts[2]}-${parts[1]}-${parts[0]}';
+    DateTime date = DateTime.parse(formattedDate);
+
+    Entry entry = Entry.expense(
+        entryNameController.text,
+        value,
+        _getCategoryEnum(entryCategoryController.text),
+        Timestamp.fromDate(date));
 
     setState(() {
       widget.userData['income'] = widget.userData['income'] - value;
-      widget.userData['entryList']['$currentYear']['$currentMonth']
+      widget.userData['entryList'][parts[2]][int.parse(parts[1]).toString()]
           .add(entry.toMap());
     });
     UserDAOFirestore.update(widget.userData);
@@ -94,6 +105,20 @@ class _ExpensesPage extends State<ExpensesPage> {
       entryValueController.clear();
       entryCategoryController.clear();
     });
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null) {
+      setState(() {
+        entryDate.text = DateFormat('dd/MM/yyyy').format(picked);
+      });
+    }
   }
 
   @override
@@ -117,6 +142,10 @@ class _ExpensesPage extends State<ExpensesPage> {
                 InputField(text: 'Nome', controller: entryNameController),
                 NumericInputField(
                     text: 'Custo', controller: entryValueController),
+                DateInputField(
+                    text: 'Data',
+                    controller: entryDate,
+                    selectDate: _selectDate),
                 Container(
                   margin: const EdgeInsets.only(bottom: 40),
                 ),

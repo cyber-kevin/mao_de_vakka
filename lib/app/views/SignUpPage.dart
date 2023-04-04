@@ -7,7 +7,7 @@ import 'package:mao_de_vakka/app/components/date_input_field.dart';
 import 'package:mao_de_vakka/app/components/default_button.dart';
 import 'package:mao_de_vakka/app/components/DefaultTitle.dart';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
-import 'package:mao_de_vakka/app/views/HomePage.dart';
+import 'package:mao_de_vakka/app/views/homepage.dart';
 import 'package:mao_de_vakka/app/views/InitialScreen.dart';
 import 'package:mao_de_vakka/app/views/PresentationScreen.dart';
 import 'package:intl/intl.dart';

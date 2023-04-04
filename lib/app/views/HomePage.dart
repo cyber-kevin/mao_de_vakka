@@ -17,8 +17,8 @@ import 'package:intl/intl.dart' as intl;
 import 'package:mao_de_vakka/app/components/UnderscoreInputField.dart';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:mao_de_vakka/app/models/Entry.dart';
-import 'package:mao_de_vakka/app/views/ExpensesPage.dart';
+import 'package:mao_de_vakka/app/models/entry.dart';
+import 'package:mao_de_vakka/app/views/expenses_page.dart';
 import '../components/LegendItem.dart';
 import 'ConfigPage.dart';
 
@@ -80,6 +80,8 @@ class _HomePage extends State<HomePage> {
         .forEach((e) => {
               if (e['category'] != 'Saldo') {entrys.add(e)}
             });
+
+    print(entrys);
 
     return entrys;
   }

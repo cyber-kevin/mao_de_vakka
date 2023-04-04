@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mao_de_vakka/app/views/HomePage.dart';
+import 'package:mao_de_vakka/app/views/homepage.dart';
 
 class UnderscoreInputField extends StatelessWidget {
   final TextEditingController controller;

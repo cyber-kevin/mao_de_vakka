@@ -14,7 +14,7 @@ class Entry {
       : title = 'Crédito',
         category = Category.Saldo;
 
-  Entry.expense(this.title, this.value, this.category);
+  Entry.expense(this.title, this.value, this.category, this.date);
 
   Map<String, dynamic> toMap() {
     return {

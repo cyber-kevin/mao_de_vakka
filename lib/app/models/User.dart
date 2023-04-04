@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mao_de_vakka/app/models/Entry.dart';
+import 'package:mao_de_vakka/app/models/entry.dart';
 import 'package:mao_de_vakka/app/models/Month.dart';
 
 class User {

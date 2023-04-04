@@ -4,7 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'dart:core';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
 import 'package:mao_de_vakka/app/views/InitialScreen.dart';
-import 'HomePage.dart';
+import 'homepage.dart';
 
 class ConfigPage extends StatefulWidget {
   final Map<String, dynamic> userData;

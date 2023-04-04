@@ -10,7 +10,7 @@ import 'package:mao_de_vakka/app/models/User.dart' as UserApp;
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mao_de_vakka/app/views/HomePage.dart';
+import 'package:mao_de_vakka/app/views/homepage.dart';
 
 class SignInPage extends StatefulWidget {
   SignInPage({super.key});

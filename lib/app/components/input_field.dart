@@ -41,13 +41,14 @@ class InputField extends StatelessWidget {
                 obscureText: obscureText,
                 onChanged: onChanged,
                 decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                            width: 3,
+                            style: BorderStyle.solid,
+                            color: Color.fromARGB(255, 34, 197, 94)))),
               ),
             )
           ],

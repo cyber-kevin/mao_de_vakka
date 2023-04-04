@@ -28,7 +28,7 @@ class _TransactionsPage extends State<TransactionsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(250, 231, 229, 229),
+      backgroundColor: Colors.white,
       body: Center(
         child: ListView.builder(
           itemCount: widget

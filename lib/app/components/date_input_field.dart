@@ -39,8 +39,10 @@ class DateInputField extends StatelessWidget {
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none))),
+                      borderSide: const BorderSide(
+                          width: 3,
+                          style: BorderStyle.solid,
+                          color: Color.fromARGB(255, 34, 197, 94)))),
               readOnly: true,
               onTap: () => selectDate(context),
             ))

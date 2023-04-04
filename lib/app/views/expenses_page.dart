@@ -124,7 +124,7 @@ class _ExpensesPage extends State<ExpensesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(250, 231, 229, 229),
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Center(
             child: Column(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class InputField extends StatelessWidget {
   final String text;
   bool obscureText;
@@ -19,10 +20,10 @@ class InputField extends StatelessWidget {
       children: [
         Container(
           width: 300,
+          margin: const EdgeInsets.only(bottom: 10),
           child: Text(text,
-              style: TextStyle(
+              style: const TextStyle(
                   fontFamily: 'Montserrat', fontWeight: FontWeight.w600)),
-          margin: EdgeInsets.only(bottom: 10),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -45,7 +46,7 @@ class InputField extends StatelessWidget {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide:
-                          BorderSide(width: 0, style: BorderStyle.none)),
+                          const BorderSide(width: 0, style: BorderStyle.none)),
                 ),
               ),
             )

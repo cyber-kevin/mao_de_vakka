@@ -3,11 +3,11 @@ import 'dart:ffi';
 import 'package:d_chart/d_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mao_de_vakka/app/components/DefaultButton.dart';
+import 'package:mao_de_vakka/app/components/default_button.dart';
 import 'package:mao_de_vakka/app/components/DefaultTitle.dart';
-import 'package:mao_de_vakka/app/components/EditableTextWidget.dart';
-import 'package:mao_de_vakka/app/components/InputField.dart';
-import 'package:mao_de_vakka/app/components/NumericInputField.dart';
+import 'package:mao_de_vakka/app/components/editable_text_widget.dart';
+import 'package:mao_de_vakka/app/components/input_field.dart';
+import 'package:mao_de_vakka/app/components/numeric_input_field.dart';
 import 'package:mao_de_vakka/app/components/PieChart.dart';
 import 'package:mao_de_vakka/app/components/TransparentButton.dart';
 import 'package:mao_de_vakka/app/models/Category.dart';
@@ -379,7 +379,7 @@ class _HomePage extends State<HomePage> {
                   padding: const EdgeInsets.only(left: 45),
                   child: Column(
                     children: [
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(

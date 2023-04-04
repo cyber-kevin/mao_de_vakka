@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mao_de_vakka/app/components/InputField.dart';
+import 'package:mao_de_vakka/app/components/input_field.dart';
 import 'package:mao_de_vakka/app/components/RadioSelection.dart';
 import 'package:mao_de_vakka/app/components/TitleRadioSelection.dart';
-import 'package:mao_de_vakka/app/components/DateInputField.dart';
-import 'package:mao_de_vakka/app/components/DefaultButton.dart';
+import 'package:mao_de_vakka/app/components/date_input_field.dart';
+import 'package:mao_de_vakka/app/components/default_button.dart';
 import 'package:mao_de_vakka/app/components/DefaultTitle.dart';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
 import 'package:mao_de_vakka/app/views/HomePage.dart';

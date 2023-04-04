@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mao_de_vakka/app/views/SignUpPage.dart';
 import 'package:mao_de_vakka/app/views/SignInPage.dart';
 import 'package:mao_de_vakka/app/views/HomePage.dart';
-import 'package:mao_de_vakka/app/components/DefaultButton.dart';
+import 'package:mao_de_vakka/app/components/default_button.dart';
 import 'package:mao_de_vakka/app/components/UnderscoreButton.dart';
 
 class InitialScreen extends StatelessWidget {

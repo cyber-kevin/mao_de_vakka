@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:date_field/date_field.dart';
 
 class DateInputField extends StatelessWidget {
-  String text;
-  TextEditingController controller;
-  Function selectDate;
+  final String text;
+  final TextEditingController controller;
+  final Function selectDate;
 
-  DateInputField({
+  const DateInputField({
     super.key,
     required this.text,
     required this.controller,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// ignore: must_be_immutable
 class NumericInputField extends StatelessWidget {
   final String text;
   bool obscureText;
@@ -52,7 +53,7 @@ class NumericInputField extends StatelessWidget {
                 onChanged: onChanged,
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.attach_money, color: Colors.black),
+                    icon: const Icon(Icons.attach_money, color: Colors.black),
                     alignment: Alignment.bottomLeft,
                     onPressed: () {},
                   ),
@@ -61,7 +62,7 @@ class NumericInputField extends StatelessWidget {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide:
-                          BorderSide(width: 0, style: BorderStyle.none)),
+                          const BorderSide(width: 0, style: BorderStyle.none)),
                 ),
               ),
             )

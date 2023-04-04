@@ -6,11 +6,11 @@ class DefaultButton extends StatelessWidget {
   final Color fontColor;
   final dynamic borderColor;
   final VoidCallback onPressed;
-  double width;
-  double height;
-  MainAxisAlignment alignment;
+  final double width;
+  final double height;
+  final MainAxisAlignment alignment;
 
-  DefaultButton(
+  const DefaultButton(
       {super.key,
       required this.text,
       required this.backgroundColor,

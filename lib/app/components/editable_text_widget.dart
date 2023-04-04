@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
+// ignore: must_be_immutable
 class EditableTextWidget extends StatefulWidget {
   String initialText;
   TextEditingController controller;
   final Map<String, dynamic> userData;
 
   EditableTextWidget(
-      {required this.initialText,
+      {super.key,
+      required this.initialText,
       required this.controller,
       required this.userData});
 
@@ -17,8 +18,6 @@ class EditableTextWidget extends StatefulWidget {
 }
 
 class _EditableTextWidgetState extends State<EditableTextWidget> {
-  TextEditingController _textEditingController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -49,7 +48,7 @@ class _EditableTextWidgetState extends State<EditableTextWidget> {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: Text('OK'),
+                  child: const Text('OK'),
                   onPressed: () {
                     Navigator.of(context).pop(widget.controller.text);
                   },
@@ -75,15 +74,15 @@ class _EditableTextWidgetState extends State<EditableTextWidget> {
             double.parse(widget.initialText.replaceAll(',', '.'))
                 .toStringAsFixed(2)
                 .replaceAll('.', ','),
-            style: TextStyle(
+            style: const TextStyle(
                 fontFamily: 'Montserrat',
                 fontWeight: FontWeight.w600,
                 fontSize: 36),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
-          Icon(Icons.edit),
+          const Icon(Icons.edit),
         ],
       ),
     );

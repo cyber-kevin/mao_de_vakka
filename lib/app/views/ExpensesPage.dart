@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mao_de_vakka/app/components/InputField.dart';
-import 'package:mao_de_vakka/app/components/NumericInputField.dart';
+import 'package:mao_de_vakka/app/components/input_field.dart';
+import 'package:mao_de_vakka/app/components/numeric_input_field.dart';
 import 'package:mao_de_vakka/app/components/RadioSelection.dart';
-import 'package:mao_de_vakka/app/components/DefaultButton.dart';
+import 'package:mao_de_vakka/app/components/default_button.dart';
 import 'package:mao_de_vakka/app/models/Category.dart';
 import 'package:mao_de_vakka/app/models/Entry.dart';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';

@@ -20,7 +20,6 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:mao_de_vakka/app/models/entry.dart';
 import 'package:mao_de_vakka/app/views/expenses_page.dart';
 import '../components/LegendItem.dart';
-import 'ConfigPage.dart';
 
 class HomePage extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -405,8 +404,32 @@ class _HomePage extends State<HomePage> {
                     ],
                   )),
               Container(
-                margin: const EdgeInsets.only(bottom: 30),
-              ),
+                  margin: const EdgeInsets.only(bottom: 30),
+                  child: DefaultButton(
+                      text: "Simule seu limite de crédito",
+                      width: 300,
+                      height: 50,
+                      alignment: MainAxisAlignment.center,
+                      backgroundColor: Color.fromARGB(255, 20, 219, 139),
+                      onPressed: () => showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                                title: const Text("Simulação de crédito"),
+                                content: const Text(
+                                    "Com base nos dados fornecidos no seu cadastro, oferecemos uma analise de perfil para informar qual seria o limite de crédito que você poderia ter. Deseja continuar?"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, "Cancel"),
+                                    child: const Text("Cancel"),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, "OK"),
+                                    child: const Text("OK"),
+                                  ),
+                                ],
+                              )))),
             ],
           ),
         ),

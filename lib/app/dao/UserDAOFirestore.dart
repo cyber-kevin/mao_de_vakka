@@ -5,52 +5,56 @@ class UserDAOFirestore {
   static CollectionReference collection =
       FirebaseFirestore.instance.collection('users');
 
-  static Future<void> addUser(String userId, String name, String gender,
-    String maritalStatus, String educationLevel, DateTime birthDate) async {
+  static Future<void> addUser(
+      String userId,
+      String name,
+      String gender,
+      String maritalStatus,
+      String educationLevel,
+      String incomeCategory,
+      DateTime birthDate) async {
+    int currentYear = DateTime.now().year;
 
-      int currentYear = DateTime.now().year;
-
-      print('entrou');
-
-      collection.doc(userId).set({
-        'name': name,
-        'gender': gender,
-        'maritalStatus': maritalStatus,
-        'educationLevel': educationLevel,
-        'birthDate': birthDate,
-        'income': 0,
-        'entryList': {
-          '$currentYear': {
-            '1': [],
-            '2': [],
-            '3': [],
-            '4': [],
-            '5': [],
-            '7': [],
-            '8': [],
-            '9': [],
-            '10': [],
-            '11': [],
-            '12': [],
-          },
+    collection.doc(userId).set({
+      'name': name,
+      'gender': gender,
+      'maritalStatus': maritalStatus,
+      'educationLevel': educationLevel,
+      'incomeCategory': incomeCategory,
+      'birthDate': birthDate,
+      'income': 0,
+      'entryList': {
+        '$currentYear': {
+          '1': [],
+          '2': [],
+          '3': [],
+          '4': [],
+          '5': [],
+          '7': [],
+          '8': [],
+          '9': [],
+          '10': [],
+          '11': [],
+          '12': [],
         },
-        'saveMoney': {
-          '$currentYear': {
-            '1': [],
-            '2': [],
-            '3': [],
-            '4': [],
-            '5': [],
-            '6': [],
-            '7': [],
-            '8': [],
-            '9': [],
-            '10': [],
-            '11': [],
-            '12': [],
-          },
-        }
-      });
+      },
+      'saveMoney': {
+        '$currentYear': {
+          '1': [],
+          '2': [],
+          '3': [],
+          '4': [],
+          '5': [],
+          '6': [],
+          '7': [],
+          '8': [],
+          '9': [],
+          '10': [],
+          '11': [],
+          '12': [],
+        },
+      }
+    });
   }
 
   @override
@@ -62,7 +66,7 @@ class UserDAOFirestore {
   }
 
   @override
-  static void update(Map<String, dynamic> userData) async{
+  static void update(Map<String, dynamic> userData) async {
     DocumentReference docUser = collection.doc(userData['id']);
     await docUser.update(userData);
   }
@@ -70,8 +74,8 @@ class UserDAOFirestore {
   @override
   static void delete() {}
 
-  static Map<String, dynamic> toJson(DocumentSnapshot<Object?> snapshot, String id) {
-
+  static Map<String, dynamic> toJson(
+      DocumentSnapshot<Object?> snapshot, String id) {
     Map<String, dynamic> userData = {
       'id': id,
       'name': snapshot.get('name'),
@@ -80,10 +84,11 @@ class UserDAOFirestore {
       'gender': snapshot.get('gender'),
       'maritalStatus': snapshot.get('maritalStatus'),
       'educationLevel': snapshot.get('educationLevel'),
+      'incomeCategory': snapshot.get('incomeCategory'),
       'entryList': snapshot.get('entryList'),
       'saveMoney': snapshot.get('saveMoney')
-  };
+    };
 
-  return userData;
-}
+    return userData;
+  }
 }

@@ -164,6 +164,7 @@ class _SignUpPage extends State<SignUpPage> {
                                 genderController.text,
                                 maritalStatusController.text,
                                 educationLevelController.text,
+                                incomeLevel.text,
                                 DateFormat('dd/MM/yyyy')
                                     .parse(birthdateController.text));
 

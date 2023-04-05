@@ -11,6 +11,7 @@ class User {
   String gender;
   String maritalStatus;
   String educationLevel;
+  String incomeCategory;
   double income = 0.0;
   Map<String, List<double>> _saveMoney = Map();
   Map<String, List<List<Entry>>> _entryList = Map();
@@ -23,7 +24,8 @@ class User {
       required this.birthdate,
       required this.gender,
       required this.maritalStatus,
-      required this.educationLevel});
+      required this.educationLevel,
+      required this.incomeCategory});
 
   // List<Entry> getEntryList(String year, Month month) {
   //   return _entryList[year]![month.value - 1];
@@ -54,6 +56,7 @@ class User {
         'gender': gender,
         'maritalStatus': maritalStatus,
         'educationLevel': educationLevel,
+        'incomeCategory': incomeCategory,
         'income': income,
         'saveMoneyList': _saveMoney,
         'entryList': _entryList,
@@ -61,13 +64,15 @@ class User {
 
   static User fromJson(Map<String, dynamic> json) {
     User user = User(
-        name: json['name'],
-        email: json['email'],
-        password: json['password'],
-        birthdate: (json['birthdate'] as Timestamp).toDate(),
-        gender: json['gender'],
-        maritalStatus: json['maritalStatus'],
-        educationLevel: json['educationLevel']);
+      name: json['name'],
+      email: json['email'],
+      password: json['password'],
+      birthdate: (json['birthdate'] as Timestamp).toDate(),
+      gender: json['gender'],
+      maritalStatus: json['maritalStatus'],
+      educationLevel: json['educationLevel'],
+      incomeCategory: json['incomeCategory'],
+    );
     return user;
   }
 }

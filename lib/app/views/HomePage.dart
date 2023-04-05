@@ -20,6 +20,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:mao_de_vakka/app/models/entry.dart';
 import 'package:mao_de_vakka/app/views/expenses_page.dart';
 import '../components/LegendItem.dart';
+import "package:mao_de_vakka/constants/strings.dart";
 
 class HomePage extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -106,6 +107,35 @@ class _HomePage extends State<HomePage> {
     }
 
     return totalValuesPerCategory;
+  }
+
+  String preditCreditLimit() {
+    String limit = '';
+    String incomecat = (widget.userData['incomeCategory']);
+    switch (incomecat) {
+      case '< 40K':
+        limit = '${simulationMessage} R\$ 3754';
+        break;
+      case '40K - 60K':
+        limit = '${simulationMessage} R\$ 5462';
+        break;
+      case '60K - 80K':
+        limit = '${simulationMessage} R\$ 10758';
+        break;
+      case '80K - 100K':
+        limit = '${simulationMessage} R\$ 15809';
+        break;
+      case '100K - 120K':
+        limit = '${simulationMessage} R\$ 19717';
+        break;
+      case 'Não declarada':
+        limit = '${simulationMessage} R\$ 9516';
+        break;
+      default:
+        limit = '${simulationMessage} R\$ 9516';
+        break;
+    }
+    return limit;
   }
 
   double getSumOfAllExpenses() {
@@ -474,8 +504,26 @@ class _HomePage extends State<HomePage> {
                                     child: const Text("Cancel"),
                                   ),
                                   TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(context, "OK"),
+                                    onPressed: () {
+                                      Navigator.pop(context, "OK");
+                                      String creditLimit = preditCreditLimit();
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                          title: const Text(
+                                              "Simulação de limite de crédito"),
+                                          content: Text(creditLimit),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                              child: const Text("Fechar"),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
                                     child: const Text("OK"),
                                   ),
                                 ],

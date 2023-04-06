@@ -366,7 +366,10 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                                         }
                                       }
 
-                                      UserDAOFirestore.update(widget.userData);
+                                      setState(() {
+                                        UserDAOFirestore.update(
+                                            widget.userData);
+                                      });
                                     },
                                     style: ElevatedButton.styleFrom(
                                         foregroundColor: Colors.black,

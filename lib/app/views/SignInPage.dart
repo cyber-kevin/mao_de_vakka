@@ -59,7 +59,7 @@ class _SignInPage extends State<SignInPage> {
                 child: Column(
                   children: [
                     InputField(text: 'E-mail:', controller: emailController),
-                    InputField(text: 'Senha:', controller: passwordController),
+                    InputField(text: 'Senha:', controller: passwordController, obscureText: true),
                     Container(
                       child: Text(
                         _textError,

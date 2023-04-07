@@ -227,7 +227,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                           color: Color.fromARGB(255, 20, 219, 139),
                           fontWeight: FontWeight.w600))
                 else
-                  const Text('Selecione uma despesa para alterar',
+                  const Text('Selecione uma despesa para excluir',
                       style: TextStyle(
                           fontSize: 16,
                           fontFamily: 'Montserrat',

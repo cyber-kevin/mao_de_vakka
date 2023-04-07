@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../controllers/direct_to_homepage.dart';
-import 'homepage.dart';
+import 'package:mao_de_vakka/app/views/home_page.dart';
 
 class PresentationPage extends StatefulWidget {
   final Map<String, dynamic> userData;

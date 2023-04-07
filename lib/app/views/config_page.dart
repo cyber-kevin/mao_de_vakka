@@ -1,14 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'dart:core';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
-import 'package:mao_de_vakka/app/views/InitialScreen.dart';
-import 'homepage.dart';
+import 'package:mao_de_vakka/app/views/initial_screen.dart';
 
 class ConfigPage extends StatefulWidget {
   final Map<String, dynamic> userData;
   const ConfigPage({super.key, this.userData = const {}});
+  @override
   State<ConfigPage> createState() => _ConfigPage();
 }
 
@@ -17,8 +16,6 @@ class _ConfigPage extends State<ConfigPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> entrys = [];
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(
@@ -108,7 +105,7 @@ class _ConfigPage extends State<ConfigPage> {
                       elevation: 0.0,
                       shadowColor: Colors.transparent,
                       minimumSize: const Size(360, 50),
-                      backgroundColor: Color.fromARGB(0, 0, 248, 91),
+                      backgroundColor: const Color.fromARGB(0, 0, 248, 91),
                       shape: RoundedRectangleBorder(
                           side: const BorderSide(
                               color: Color.fromARGB(255, 34, 197, 94),
@@ -117,7 +114,7 @@ class _ConfigPage extends State<ConfigPage> {
                   onPressed: () => showDialog(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
-                            title: const Text("Excluir conta"),
+                            title: const Text("Sair da conta"),
                             content: const Text(
                                 "Tem certeza que deseja sair do aplicativo?"),
                             actions: [
@@ -130,6 +127,7 @@ class _ConfigPage extends State<ConfigPage> {
                                 onPressed: () async {
                                   await FirebaseAuth.instance.signOut();
 
+                                  // ignore: use_build_context_synchronously
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (_) =>

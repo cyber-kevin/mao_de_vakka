@@ -1,10 +1,7 @@
-import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:mao_de_vakka/app/models/Category.dart';
 
 class CategoryDetails extends StatefulWidget {
@@ -41,8 +38,6 @@ class _CategoryDetailsState extends State<CategoryDetails> {
     widget.userData['entryList']['$year']['$month'].forEach((e) => {
           if (e['category'] == category) {entries.add(e)}
         });
-
-    print(entries);
 
     return entries;
   }
@@ -168,52 +163,52 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                   ),
                   items: const [
                     DropdownMenuItem(
-                      child: Text('Janeiro'),
                       value: 1,
+                      child: Text('Janeiro'),
                     ),
                     DropdownMenuItem(
-                      child: Text('Fevereiro'),
                       value: 2,
+                      child: Text('Fevereiro'),
                     ),
                     DropdownMenuItem(
-                      child: Text('Março'),
                       value: 3,
+                      child: Text('Março'),
                     ),
                     DropdownMenuItem(
-                      child: Text('Abril'),
                       value: 4,
+                      child: Text('Abril'),
                     ),
                     DropdownMenuItem(
-                      child: Text('Maio'),
                       value: 5,
+                      child: Text('Maio'),
                     ),
                     DropdownMenuItem(
-                      child: Text('Junho'),
                       value: 6,
+                      child: Text('Junho'),
                     ),
                     DropdownMenuItem(
-                      child: Text('Julho'),
                       value: 7,
+                      child: Text('Julho'),
                     ),
                     DropdownMenuItem(
-                      child: Text('Agosto'),
                       value: 8,
+                      child: Text('Agosto'),
                     ),
                     DropdownMenuItem(
-                      child: Text('Setembro'),
                       value: 9,
+                      child: Text('Setembro'),
                     ),
                     DropdownMenuItem(
-                      child: Text('Outubro'),
                       value: 10,
+                      child: Text('Outubro'),
                     ),
                     DropdownMenuItem(
-                      child: Text('Novembro'),
                       value: 11,
+                      child: Text('Novembro'),
                     ),
                     DropdownMenuItem(
-                      child: Text('Dezembro'),
                       value: 12,
+                      child: Text('Dezembro'),
                     ),
                   ],
                   onChanged: (Object? value) {
@@ -222,82 +217,15 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                     });
                   },
                 ),
-                const Padding(padding: EdgeInsets.only(left: 20)),
-                DropdownButton(
-                  hint: const Text('Selecione o Ano',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600)),
-                  value: year,
-                  icon: const Icon(Icons.arrow_downward,
-                      color: Color.fromARGB(255, 34, 197, 94)),
-                  iconSize: 24,
-                  elevation: 16,
-                  style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                  isExpanded: true,
-                  underline: Container(
-                    height: 2,
-                    color: const Color.fromARGB(255, 3, 83, 21),
-                  ),
-                  items: const [
-                    DropdownMenuItem(
-                      child: Text('2021'),
-                      value: 2021,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2022'),
-                      value: 2022,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2023'),
-                      value: 2023,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2024'),
-                      value: 2024,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2025'),
-                      value: 2025,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2026'),
-                      value: 2026,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2027'),
-                      value: 2027,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2028'),
-                      value: 2028,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2029'),
-                      value: 2029,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2030'),
-                      value: 2030,
-                    ),
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      year = value!;
-                    });
-                  },
-                ),
                 const Padding(padding: EdgeInsets.only(top: 20)),
-                if (getExpensesPerCategory(category).length == 0)
-                  Container(
-                      child: Text(
-                          'Você ainda não tem despesas com este tipo de filtro.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontFamily: 'Poppins',
-                              color: Color.fromARGB(255, 20, 219, 139),
-                              fontWeight: FontWeight.w600)))
+                if (getExpensesPerCategory(category).isEmpty)
+                  const Text(
+                      'Você ainda não tem despesas com este tipo de filtro.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontFamily: 'Poppins',
+                          color: Color.fromARGB(255, 20, 219, 139),
+                          fontWeight: FontWeight.w600))
                 else
                   const Text('Selecione uma despesa para alterar',
                       style: TextStyle(
@@ -314,7 +242,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                       return Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
-                            side: BorderSide(
+                            side: const BorderSide(
                               color: Colors.black, // Set border color
                               width: 1.0, // Set border width
                             )),
@@ -342,7 +270,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                                             const EdgeInsets.only(bottom: 2),
                                         child: Text(
                                           "R\$ ${getExpensesPerCategory(category)[index]['value']}",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: Colors.black,
                                               fontFamily: 'Montserrat',
                                               fontWeight: FontWeight.w600),
@@ -365,7 +293,6 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                                           i--;
                                         }
                                       }
-
                                       setState(() {
                                         UserDAOFirestore.update(
                                             widget.userData);

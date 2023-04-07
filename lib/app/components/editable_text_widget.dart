@@ -14,6 +14,7 @@ class EditableTextWidget extends StatefulWidget {
       required this.userData});
 
   @override
+  // ignore: library_private_types_in_public_api
   _EditableTextWidgetState createState() => _EditableTextWidgetState();
 }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mao_de_vakka/app/views/SignUpPage.dart';
-import 'package:mao_de_vakka/app/views/SignInPage.dart';
-import 'package:mao_de_vakka/app/views/homepage.dart';
+import 'package:mao_de_vakka/app/views/sign_up_page.dart';
+import 'package:mao_de_vakka/app/views/sing_in_page.dart';
+import 'package:mao_de_vakka/app/views/home_page.dart';
 import 'package:mao_de_vakka/app/components/default_button.dart';
 import 'package:mao_de_vakka/app/components/UnderscoreButton.dart';
 

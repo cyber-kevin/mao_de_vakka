@@ -2,8 +2,8 @@ import "package:flutter/material.dart";
 import 'package:mao_de_vakka/app/views/category_details.dart';
 import "package:mao_de_vakka/app/views/config_page.dart";
 import 'package:mao_de_vakka/app/views/expenses_page.dart';
-import 'package:mao_de_vakka/app/views/homepage.dart';
-import "package:mao_de_vakka/app/views/TransactionsPage.dart";
+import 'package:mao_de_vakka/app/views/home_page.dart';
+import 'package:mao_de_vakka/app/views/transactions_page.dart';
 import "package:mao_de_vakka/app/views/config_page.dart";
 
 class RedirectPage extends StatefulWidget {

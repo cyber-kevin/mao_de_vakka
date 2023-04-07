@@ -7,9 +7,9 @@ import 'package:mao_de_vakka/app/components/date_input_field.dart';
 import 'package:mao_de_vakka/app/components/default_button.dart';
 import 'package:mao_de_vakka/app/components/DefaultTitle.dart';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
-import 'package:mao_de_vakka/app/views/homepage.dart';
-import 'package:mao_de_vakka/app/views/InitialScreen.dart';
-import 'package:mao_de_vakka/app/views/PresentationScreen.dart';
+import 'package:mao_de_vakka/app/views/home_page.dart';
+import 'package:mao_de_vakka/app/views/initial_screen.dart';
+import 'package:mao_de_vakka/app/views/presentation_screen.dart';
 import 'package:intl/intl.dart';
 
 class SignUpPage extends StatefulWidget {

@@ -9,13 +9,13 @@ import 'package:mao_de_vakka/app/components/default_button.dart';
 import 'package:mao_de_vakka/app/models/Category.dart';
 import 'package:mao_de_vakka/app/models/entry.dart';
 import 'package:mao_de_vakka/app/dao/UserDAOFirestore.dart';
-import 'package:mao_de_vakka/app/views/homepage.dart';
 
 import '../controllers/direct_to_homepage.dart';
 
 class ExpensesPage extends StatefulWidget {
   final Map<String, dynamic> userData;
   const ExpensesPage({super.key, this.userData = const {}});
+  @override
   State<ExpensesPage> createState() => _ExpensesPage();
 }
 

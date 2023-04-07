@@ -222,72 +222,6 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                     });
                   },
                 ),
-                const Padding(padding: EdgeInsets.only(left: 20)),
-                DropdownButton(
-                  hint: const Text('Selecione o Ano',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600)),
-                  value: year,
-                  icon: const Icon(Icons.arrow_downward,
-                      color: Color.fromARGB(255, 34, 197, 94)),
-                  iconSize: 24,
-                  elevation: 16,
-                  style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                  isExpanded: true,
-                  underline: Container(
-                    height: 2,
-                    color: const Color.fromARGB(255, 3, 83, 21),
-                  ),
-                  items: const [
-                    DropdownMenuItem(
-                      child: Text('2021'),
-                      value: 2021,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2022'),
-                      value: 2022,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2023'),
-                      value: 2023,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2024'),
-                      value: 2024,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2025'),
-                      value: 2025,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2026'),
-                      value: 2026,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2027'),
-                      value: 2027,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2028'),
-                      value: 2028,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2029'),
-                      value: 2029,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('2030'),
-                      value: 2030,
-                    ),
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      year = value!;
-                    });
-                  },
-                ),
                 const Padding(padding: EdgeInsets.only(top: 20)),
                 if (getExpensesPerCategory(category).length == 0)
                   Container(
@@ -299,7 +233,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                               color: Color.fromARGB(255, 20, 219, 139),
                               fontWeight: FontWeight.w600)))
                 else
-                  const Text('Selecione uma despesa para alterar',
+                  const Text('Selecione uma despesa para excluir',
                       style: TextStyle(
                           fontSize: 16,
                           fontFamily: 'Montserrat',
